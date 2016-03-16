@@ -10,7 +10,7 @@ shinyServer(function(input, output) {
   processed_data <- reactive({
     #after loading any file it would be possible to start an example
     if(is.null(input[["input_file"]])) {
-      dat <- read.csv("example_data.csv")
+      dat <- read.csv("example_counts.csv")
     } else {
       dat <- switch(input[["csv_type"]], 
                     csv1 = read.csv(input[["input_file"]][["datapath"]], 
