@@ -1,6 +1,4 @@
-#' @param confint \code{matrix} with the number of rows equal to the number of 
-#' parameters. Rownames are names of parameters. The columns contain respectively 
-#' lower and upper confidence intervals.
+
 
 
 fit_pois <- function(x, level, ...) {
@@ -59,23 +57,6 @@ fit_zinb <- function(x, level, ...) {
 }
 
 
-fit_counts <- function(x, model, level = 0.95, ...) {
-  # add later proper name checker
-  nice_model <- model
-  fitted_model <- switch(nice_model,
-                         pois = fit_pois(x, level = level, ...),
-                         nb = fit_nb(x, level = level, ...),
-                         zip = fit_zip(x, level = level, ...),
-                         zinb = fit_zinb(x, level = level, ...)
-  )
-  
-  #c(fitted_model, BIC = AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))))
-  list(coefficients = fitted_model[["coefficients"]], 
-       confint = fitted_model[["confint"]],
-       BIC = AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))))
-}
-
-
 transform_zi_confint <- function(confint_data) {
   rownames(confint_data) <- c("lambda", "p")
   colnames(confint_data) <- c("lower", "upper")
@@ -85,3 +66,45 @@ transform_zi_confint <- function(confint_data) {
   
   confint_data
 }
+
+fit_counts_single <- function(x, model, level, ...) {
+  fitted_model <- switch(model,
+                         pois = fit_pois(x, level = level, ...),
+                         nb = fit_nb(x, level = level, ...),
+                         zip = fit_zip(x, level = level, ...),
+                         zinb = fit_zinb(x, level = level, ...)
+  )
+  
+  # list(coefficients = fitted_model[["coefficients"]], 
+  #      confint = fitted_model[["confint"]],
+  c(fitted_model, 
+    BIC = AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))))
+}
+
+#' @param model a single \code{character}: \code{"pois"}, \code{"nb"},  
+#' \code{"zinb"}, \code{"zip"}, \code{"all"}. If \code{"all"}, dots parameters
+#' are ignored.
+#' @return List of fitted models. Names are names of original counts, an underline 
+#' and a name of model used.
+#' confint is a \code{matrix} with the number of rows equal to the number of 
+#' parameters. Rownames are names of parameters. The columns contain respectively 
+#' lower and upper confidence intervals.
+fit_counts <- function(counts_list, model, level = 0.95, ...) {
+  # add proper name checker
+  nice_model <- model
+  
+  if(nice_model == "all") {
+    all_fits <- unlist(lapply(c("pois", "zip", "nb", "zinb"), function(single_model)
+      lapply(count_list, fit_counts_single, model = single_model, level = level, ...)
+    ), recursive = FALSE)
+    names(all_fits) <- as.vector(vapply(c("pois", "zip", "nb", "zinb"), function(single_name) 
+      paste0(names(counts_list), "_", single_name), rep("a", length(counts_list))))
+  } else {
+    all_fits <- lapply(count_list, fit_counts_single, model = nice_model, level = level, ...)
+    names(all_fits) <- paste0(names(counts_list), nice_model)
+  }
+  
+  all_fits
+}
+
+
