@@ -78,7 +78,8 @@ fit_counts_single <- function(x, model, level, ...) {
   # list(coefficients = fitted_model[["coefficients"]], 
   #      confint = fitted_model[["confint"]],
   c(fitted_model, 
-    BIC = AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))))
+    BIC = AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))),
+    model = model)
 }
 
 #' @param model a single \code{character}: \code{"pois"}, \code{"nb"},  

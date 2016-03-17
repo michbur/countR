@@ -12,3 +12,7 @@ summary_fitlist(all_fits)
 library(ggplot2)
 
 plot_fitlist(all_fits)
+
+
+
+compare_fit(tmp, all_fits)
