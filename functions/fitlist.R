@@ -6,11 +6,14 @@ get_count_names <- function(fitlist) {
 }
 
 summary_fitlist <- function(fitlist) {
-  BICs <- vapply(fitlist, function(single_fit) single_fit[["BIC"]], 0)
-  lambdas <- vapply(fitlist, function(single_fit) single_fit[["coefficients"]]["lambda"], 0)
   CIs <- t(vapply(fitlist, function(single_fit) single_fit[["confint"]]["lambda", ], c(0, 0)))
-  models <- vapply(fitlist, function(single_fit) single_fit[["model"]], "a")
-  data.frame(count = get_count_names(fitlist), lambda = lambdas, CIs, BIC = BICs, model = models)
+  data.frame(count = get_count_names(fitlist), 
+             lambda = vapply(fitlist, function(single_fit) single_fit[["coefficients"]]["lambda"], 0), 
+             CIs, 
+             BIC = vapply(fitlist, function(single_fit) single_fit[["BIC"]], 0), 
+             theta = vapply(fitlist, function(single_fit) single_fit[["coefficients"]]["theta"], 0),
+             r = vapply(fitlist, function(single_fit) single_fit[["coefficients"]]["r"], 0),
+             model = vapply(fitlist, function(single_fit) single_fit[["model"]], "a"))
 }
 
 plot_fitlist <- function(fitlist) {

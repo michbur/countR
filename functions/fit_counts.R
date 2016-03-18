@@ -1,6 +1,3 @@
-
-
-
 fit_pois <- function(x, level, ...) {
   fit <- glm(x ~ 1, family = poisson(link = "identity"), ...)
   
@@ -25,7 +22,7 @@ fit_nb <- function(x, level, ...) {
   
   list(fit = fit,
        coefficients = c(lambda = unname(exp(summ[["coefficients"]][1])),
-                        size = unname(summ[["theta"]])),
+                        theta = unname(summ[["theta"]])),
        confint = confint
   )
 }
@@ -36,7 +33,7 @@ fit_zip <- function(x, level, ...) {
   
   list(fit = fit,
        coefficients = c(lambda = unname(exp(summ[["coefficients"]][["count"]][, "Estimate"])),
-                        p = unname(1 - invlogit(summ[["coefficients"]][["zero"]][, "Estimate"]))),
+                        r = unname(invlogit(summ[["coefficients"]][["zero"]][, "Estimate"]))),
        confint = transform_zi_confint(suppressMessages(confint(fit, level =  level)))
   )
 }
@@ -50,19 +47,19 @@ fit_zinb <- function(x, level, ...) {
   
   list(fit = fit,
        coefficients = c(lambda = coefs[1],
-                        size = coefs[2],
-                        p = unname(1 - invlogit(summ[["coefficients"]][["zero"]][, "Estimate"]))),
+                        theta = coefs[2],
+                        r = unname(invlogit(summ[["coefficients"]][["zero"]][, "Estimate"]))),
        confint = transform_zi_confint(suppressMessages(confint(fit, level =  level)))
   )
 }
 
 
 transform_zi_confint <- function(confint_data) {
-  rownames(confint_data) <- c("lambda", "p")
+  rownames(confint_data) <- c("lambda", "r")
   colnames(confint_data) <- c("lower", "upper")
   
   confint_data["lambda", ] <- exp(confint_data["lambda", ])
-  confint_data["p", ] <- rev(1 - invlogit(confint_data["p", ]))
+  confint_data["r", ] <- rev(invlogit(confint_data["r", ]))
   
   confint_data
 }

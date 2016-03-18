@@ -7,12 +7,16 @@ tmp <- process_counts(input)
 summary_counts(tmp)
 
 all_fits <- fit_counts(tmp, model = "all")
-summary_fitlist(all_fits)
 
+summary_fitlist(all_fits)
 library(ggplot2)
 
 plot_fitlist(all_fits)
 
+all_compared <- compare_fit(tmp, all_fits)
 
+ggplot(all_compared, aes(x = x, y = value)) +
+  geom_bar(stat = "identity", fill = NA, color = "black") +
+  facet_grid(model ~ count) +
+  geom_point(aes(x = x, y = n))
 
-compare_fit(tmp, all_fits)

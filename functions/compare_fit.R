@@ -21,16 +21,10 @@ get_density_fun <- function(single_fit) {
 }
 
 
-compare_fit_single <- function(single_count, fitlist) {
-  #occurences
-  occs <- fast_tabulate(single_count)
-  
-  fits <- do.call(cbind, lapply(fitlist, function(single_fit) 
+compare_fit_single <- function(fitlist) {
+  lapply(fitlist, function(single_fit) 
     get_density_fun(single_fit)(occs[["x"]])
-  )) * sum(single_count)
-  colnames(fits) <- vapply(fitlist, function(single_fit) single_fit[["model"]], "a")
-  
-  cbind(occs, fits)
+  )
 }
 
 compare_fit <- function(count_list, fitlist = fit_counts(count_list, model = "all")) {
@@ -38,10 +32,18 @@ compare_fit <- function(count_list, fitlist = fit_counts(count_list, model = "al
   
   count_ids <- lapply(names(count_list), function(single_count_name) which(summ[["count"]] == single_count_name))
   
-  all_cmps <- lapply(1L:length(count_list), function(single_count_id)
-    compare_fit_single(count_list[[single_count_id]], fitlist[count_ids[[single_count_id]]])
-  )
-  names(all_cmps) <- names(count_list)
-  
-  all_cmps
+  do.call(rbind, lapply(1L:length(count_list), function(single_count_id) {
+    occs <- fast_tabulate(count_list[[single_count_id]])
+    
+    model_names <- unlist(lapply(as.character(summ[count_ids[[single_count_id]], "model"]),
+                                 rep, times = nrow(occs)))
+    
+    cmp <- cbind(count = names(count_list)[single_count_id], model = model_names, 
+                 do.call(rbind, lapply(fitlist[count_ids[[single_count_id]]], function(single_fit) 
+                   cbind(occs, value = get_density_fun(single_fit)(occs[["x"]]) * sum(count_list[[single_count_id]]))
+                 )))
+    rownames(cmp) <- NULL
+    
+    cmp
+  }))
 }
