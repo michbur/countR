@@ -4,19 +4,31 @@ input[3L:4, 3] <- NA
 input[240L:250, 1L:3] <- NA
 
 tmp <- process_counts(input)
-summary_counts(tmp)
 
-all_fits <- fit_counts(tmp, model = "all")
+load("repeat_list.RData")
+summary_counts(repeat_list)[["mean"]]
 
-summary_fitlist(all_fits)
+all_fits <- fit_counts(repeat_list, model = "all")
+
+
 library(ggplot2)
 
 plot_fitlist(all_fits)
 
-all_compared <- compare_fit(tmp, all_fits)
+all_compared <- compare_fit(repeat_list, all_fits)
 
 ggplot(all_compared, aes(x = x, y = value)) +
   geom_bar(stat = "identity", fill = NA, color = "black") +
   facet_grid(model ~ count) +
   geom_point(aes(x = x, y = n))
 
+summ <- summary_fitlist(all_fits)
+library(dplyr)
+
+group_by(summ, count) %>%
+  mutate(replicate_id = substr(as.character(count), 0, 1),
+         patient_id  = strsplit(as.character(count), "[[:alpha:]]")[[1]][2],
+         lowest = BIC == min(BIC)) %>%
+  ggplot(aes(x = model, y = BIC, fill = lowest)) +
+  geom_bar(stat = "identity") +
+  facet_grid(replicate_id ~ patient_id, scales = "free")

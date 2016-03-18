@@ -10,13 +10,13 @@ fast_tabulate <- function(x) {
 get_density_fun <- function(single_fit) {
   switch(single_fit[["model"]],
          pois = function(x) dpois(x, lambda = single_fit[["coefficients"]][["lambda"]]), 
-         nb = function(x) dnbinom(x, size = single_fit[["coefficients"]][["size"]], 
+         nb = function(x) dnbinom(x, size = single_fit[["coefficients"]][["theta"]], 
                                   mu = single_fit[["coefficients"]][["lambda"]]),
          zip = function(x) dZIP(x, lambda = single_fit[["coefficients"]][["lambda"]], 
-                                p = single_fit[["coefficients"]][["p"]]),
-         zinb = function(x) dZINB(x, size = single_fit[["coefficients"]][["size"]], 
+                                p = 1 - single_fit[["coefficients"]][["r"]]),
+         zinb = function(x) dZINB(x, size = single_fit[["coefficients"]][["theta"]], 
                                   lambda = single_fit[["coefficients"]][["lambda"]], 
-                                  p = single_fit[["coefficients"]][["p"]])
+                                  p = 1 - single_fit[["coefficients"]][["r"]])
   )
 }
 

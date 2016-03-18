@@ -1,13 +1,13 @@
 fit_pois <- function(x, level, ...) {
-  fit <- glm(x ~ 1, family = poisson(link = "identity"), ...)
+  fit <- glm(x ~ 1, family = poisson(link = "log"), ...)
   
-  confint_raw <- suppressMessages(confint(fit, level =  level))
+  confint_raw <- exp(suppressMessages(confint(fit, level =  level)))
   confint <- matrix(confint_raw, nrow = 1, dimnames = list("lambda", c("lower", "upper")))
   
   summ <- summary(fit)
   
   list(fit = fit,
-       coefficients = c(lambda = unname(summ[["coefficients"]][, "Estimate"])),
+       coefficients = c(lambda = exp(unname(summ[["coefficients"]][, "Estimate"]))),
        confint = confint
   )
 }
@@ -93,7 +93,7 @@ fit_counts <- function(counts_list, model, level = 0.95, ...) {
   
   if(nice_model == "all") {
     all_fits <- unlist(lapply(c("pois", "zip", "nb", "zinb"), function(single_model)
-      lapply(count_list, fit_counts_single, model = single_model, level = level, ...)
+      lapply(counts_list, fit_counts_single, model = single_model, level = level, ...)
     ), recursive = FALSE)
     names(all_fits) <- as.vector(vapply(c("pois", "zip", "nb", "zinb"), function(single_name) 
       paste0(names(counts_list), "_", single_name), rep("a", length(counts_list))))
