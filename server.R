@@ -1,14 +1,27 @@
 library(shiny)
+library(DT)
+library(reshape2)
+source("load_all.R")
 
-# Define server logic required to draw a histogram
+options(DT.options = list(dom = 'T<"clear">lfrtip',
+                          tableTools = list(sSwfPath = copySWF("./www/"),
+                                            aButtons = list(
+                                              "copy",
+                                              "print",
+                                              "csv"
+                                            )
+                          )
+))
+
+my_DT <- function(x)
+  datatable(x, escape = FALSE, extensions = 'TableTools', 
+            filter = "top", rownames = FALSE)
+
+
 shinyServer(function(input, output) {
-   
-  null_input <- reactive({
-    is.null(input[["input_file"]]) && input[["run_example"]] == 0
-  })
   
-  processed_data <- reactive({
-    #after loading any file it would be possible to start an example
+  raw_counts <- reactive({
+    # if there is no data, example is loaded
     if(is.null(input[["input_file"]])) {
       dat <- read.csv("example_counts.csv")
     } else {
@@ -17,30 +30,52 @@ shinyServer(function(input, output) {
                                     header = input[["header"]]),
                     csv2 = read.csv2(input[["input_file"]][["datapath"]], 
                                      header = input[["header"]]))
-      # if(input[["header"]])
-      # remove header if it is present 
-
+      if(input[["header"]])
+        colnames(dat) <- paste0("C", 1L:ncol(dat))
+      
     }
     
     dat
   })
   
+  processed_counts <- reactive({
+    process_counts(raw_counts())
+  })
+  
+  occs <- reactive({
+    get_occs(processed_counts())
+  })
+  
   #dabset before and after data input
-  output[["dynamic_tabset"]] <- renderUI({
-    if(null_input()) {
-      tabPanel("No input detected",
-               HTML("No input detected. <br> Select input file or example using the left panel."))
-    } else {
-      tabsetPanel(
-        #tabPanel("Results with graphics", htmlOutput("whole.report")),
-        tabPanel("Input data", tableOutput("input_data"))
-      )
-    }
+  
+  output[["input_data"]] <- DT::renderDataTable({
+    my_DT(raw_counts())
   })
   
-  
-  output[["input_data"]] <- renderTable({
-    processed_data()
+  output[["input_data_summary"]] <- DT::renderDataTable({
+    my_DT(summary_counts(processed_counts()))
   })
+  
+  output[["input_data_distr_tab"]] <- DT::renderDataTable({
+    dat <- dcast(occs(), x ~ count, value.var = "n")
+    colnames(dat)[1] <- "Count"
+    my_DT(dat)
+  })
+  
+  output[["input_data_distr_plot"]] <- renderPlot({
+    plot_occs(occs())
+  })
+  
+  output[["input_data_distr_plot_ui"]] <- renderUI({
+    plotOutput("input_data_distr_plot", 
+               height = 260 + 70 * length(processed_counts()))
+  })  
+  
+  output[["input_data_distr_plot_db"]] <- downloadHandler("distr_barplot.svg",
+                                                          content = function(file) {
+                                                            ggsave(file, plot_occs(occs()), device = svg, 
+                                                                   height = 260 + 70 * length(processed_counts()), width = 297,
+                                                                   units = "mm")
+                                                          })
   
 })

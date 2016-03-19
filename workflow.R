@@ -11,7 +11,12 @@ summary_counts(repeat_list)[["mean"]]
 all_fits <- fit_counts(repeat_list, model = "all")
 
 
+acast(get_occs(tmp), x ~ count, value.var = "n")
+
+
 library(ggplot2)
+
+plot_occs(get_occs(tmp))
 
 plot_fitlist(all_fits)
 

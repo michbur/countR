@@ -1,11 +1,3 @@
-# function that needs both input data and fits
-
-fast_tabulate <- function(x) {
-  # + 1, since we also count zeros
-  tabs <- tabulate(x + 1)
-  data.frame(x = 0L:(length(tabs) - 1), n = tabs)
-}
-
 # returns density function
 get_density_fun <- function(single_fit) {
   switch(single_fit[["model"]],
@@ -27,6 +19,7 @@ compare_fit_single <- function(fitlist) {
   )
 }
 
+# function that needs both input data and fits
 compare_fit <- function(count_list, fitlist = fit_counts(count_list, model = "all")) {
   summ <- summary_fitlist(fitlist)
   
