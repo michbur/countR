@@ -6,12 +6,10 @@ input[240L:250, 1L:3] <- NA
 tmp <- process_counts(input)
 
 load("repeat_list.RData")
-summary_counts(repeat_list)[["mean"]]
+load("healthy_list.RData")
+summary_counts(healthy_list)[["mean"]]
 
-all_fits <- fit_counts(repeat_list, model = "all")
-
-
-acast(get_occs(tmp), x ~ count, value.var = "n")
+all_fits <- fit_counts(healthy_list, model = "all")
 
 
 library(ggplot2)
@@ -31,9 +29,9 @@ summ <- summary_fitlist(all_fits)
 library(dplyr)
 
 group_by(summ, count) %>%
-  mutate(replicate_id = substr(as.character(count), 0, 1),
-         patient_id  = strsplit(as.character(count), "[[:alpha:]]")[[1]][2],
+  mutate(replicate_id = strsplit(as.character(count), "_")[[1]][1],
+         patient_id  = strsplit(as.character(count), "_")[[1]][2],
          lowest = BIC == min(BIC)) %>%
   ggplot(aes(x = model, y = BIC, fill = lowest)) +
   geom_bar(stat = "identity") +
-  facet_grid(replicate_id ~ patient_id, scales = "free")
+  facet_grid(replicate_id ~ patient_id)

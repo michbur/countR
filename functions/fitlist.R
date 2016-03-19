@@ -21,5 +21,5 @@ plot_fitlist <- function(fitlist) {
   ggplot(summ, aes(x = count, y = lambda, ymax = upper, ymin = lower, color = model)) +
     geom_point() +
     geom_errorbar() +
-    facet_wrap(~ model, ncol = 1)
+    facet_wrap(~ model, ncol = 1, scales = "free_y")
 }
