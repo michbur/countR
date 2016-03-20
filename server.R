@@ -87,5 +87,9 @@ shinyServer(function(input, output) {
     plot_fitlist(fits())
   })
   
+  output[["fit_tab"]] <- DT::renderDataTable({
+    my_DT(summary_fitlist(fits())[, c("count", "lambda", "lower", "upper", "model")])
+  })
+  
   
 })

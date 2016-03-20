@@ -11,6 +11,10 @@ summary_counts(healthy_list)[["mean"]]
 
 all_fits <- fit_counts(healthy_list, model = "all")
 
+max_len <- max(lengths(healthy_list[1L:6]))
+
+write.csv(do.call(cbind, lapply(healthy_list[1L:6], function(i)
+  c(i, rep(NA, max_len - length(i))))), file = "six_replicates.csv", row.names = FALSE)
 
 library(ggplot2)
 

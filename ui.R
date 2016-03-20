@@ -33,8 +33,10 @@ shinyUI(navbarPage(title = "countR",
                               )
                    ),
                    navbarMenu("Fitted models",
-                              tabPanel("Blabla",
-                                       plotOutput("fit_plot")
+                              tabPanel("Estimates of mean value",
+                                       includeMarkdown("./readmes/fitted_models/1.md"),
+                                       plotOutput("fit_plot"),
+                                       DT::dataTableOutput("fit_tab")
                               )
                    )
 ))
