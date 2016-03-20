@@ -1,6 +1,7 @@
 library(shiny)
 library(DT)
 library(reshape2)
+library(ggplot2)
 source("load_all.R")
 
 options(DT.options = list(dom = 'T<"clear">lfrtip',
@@ -46,6 +47,10 @@ shinyServer(function(input, output) {
     get_occs(processed_counts())
   })
   
+  fits <- reactive({
+    fit_counts(processed_counts(), model = "all")
+  })
+  
   #dabset before and after data input
   
   output[["input_data"]] <- DT::renderDataTable({
@@ -77,5 +82,10 @@ shinyServer(function(input, output) {
                                                                    height = 260 + 70 * length(processed_counts()), width = 297,
                                                                    units = "mm")
                                                           })
+  
+  output[["fit_plot"]] <- renderPlot({
+    plot_fitlist(fits())
+  })
+  
   
 })

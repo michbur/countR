@@ -18,8 +18,8 @@ summary_fitlist <- function(fitlist) {
 
 plot_fitlist <- function(fitlist) {
   summ <- summary_fitlist(fitlist)
-  ggplot(summ, aes(x = count, y = lambda, ymax = upper, ymin = lower, color = model)) +
+  ggplot(summ, aes(x = model, y = lambda, ymax = upper, ymin = lower, color = model)) +
     geom_point() +
     geom_errorbar() +
-    facet_wrap(~ model, ncol = 1, scales = "free_y")
+    facet_wrap(~ count, scales = "free_y")
 }

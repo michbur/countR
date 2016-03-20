@@ -31,5 +31,10 @@ shinyUI(navbarPage(title = "countR",
                                        includeMarkdown("./readmes/count_data/4.md"),
                                        DT::dataTableOutput("input_data_distr_tab")
                               )
+                   ),
+                   navbarMenu("Fitted models",
+                              tabPanel("Blabla",
+                                       plotOutput("fit_plot")
+                              )
                    )
 ))
