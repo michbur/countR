@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
                                     header = input[["header"]]),
                     csv2 = read.csv2(input[["input_file"]][["datapath"]], 
                                      header = input[["header"]]))
-      if(input[["header"]])
+      if(!input[["header"]])
         colnames(dat) <- paste0("C", 1L:ncol(dat))
       
     }
