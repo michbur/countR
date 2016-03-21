@@ -109,7 +109,7 @@ fit_counts <- function(counts_list, single = TRUE, model, level = 0.95, ...) {
   } else {
     whole_data <- do.call(rbind, lapply(names(counts_list), function(single_name) 
       data.frame(count_name = single_name, value = healthy_list[[single_name]]))) 
-    all_fits <- fit2fitlist(fit_zip_whole(whole_data, level))
+    all_fits <- fit2fitlist(fit_zinb_whole(whole_data, level))
   }
   
   all_fits
@@ -150,7 +150,7 @@ fit_nb_whole <- function(x, level, ...) {
   fit <- MASS::glm.nb(value ~ count_name - 1, data = x, ...)
   summ <- summary(fit)
   
-  coefs <- exp(summ[["coefficients"]][, "Estimate"])
+  coefs <- exp(summ[["coefficients"]][, "Estimate"][-nrow(summ[["coefficients"]])])
   names(coefs) <- sub("count_name", "", names(coefs))
   
   confint_raw <- exp(suppressMessages(confint(fit, level =  level)))
@@ -186,16 +186,22 @@ fit_zip_whole <- function(x, level, ...) {
   )
 }
 
-fit_zinb <- function(x, level, ...) {
-  fit <- zeroinfl2(x ~ 1, dist = "negbin", ...)
+fit_zinb_whole <- function(x, level, ...) {
+  fit <- zeroinfl2(value ~ count_name - 1, data = x, dist = "negbin", ...)
   summ <- summary(fit)
   
-  coefs <- unname(exp(summ[["coefficients"]][["count"]][, "Estimate"]))
+  lambdas <- unname(exp(summ[["coefficients"]][["count"]][, "Estimate"]))
+  rs <- unname(invlogit(summ[["coefficients"]][["zero"]][, "Estimate"]))
+  confint_raw <- suppressMessages(confint(fit, level =  level))
+  
+  coefs <- lapply(1L:length(lambdas), function(single_coef) 
+    c(lambda = lambdas[single_coef], theta = summ[["theta"]], r = rs[single_coef]))
+  names(coefs) <- sub("count_name", "", names(summ[["coefficients"]][["count"]][, "Estimate"]))
   
   list(fit = fit,
-       coefficients = c(lambda = coefs[1],
-                        theta = coefs[2],
-                        r = unname(invlogit(summ[["coefficients"]][["zero"]][, "Estimate"]))),
-       confint = transform_zi_confint(suppressMessages(confint(fit, level =  level)))
+       coefficients = coefs,
+       confint = lapply(1L:(nrow(confint_raw)/2), function(single_confint) 
+         transform_zi_confint(confint_raw[c(single_confint + c(0, 6)), ])),
+       model = "zinb"
   )
 }
