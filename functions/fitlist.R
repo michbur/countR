@@ -16,7 +16,7 @@ summary_fitlist <- function(fitlist) {
              model = vapply(fitlist, function(single_fit) single_fit[["model"]], "a"))
 }
 
-plot_fitlist <- function(fitlist) {
+plot_fitlist <- function(fitlist, model_names = c("pois", "nb", "zip", "zinb")) {
   summ <- summary_fitlist(fitlist)
 
   plot_dat <- do.call(rbind, lapply(levels(summ[["count"]]), function(single_count) {
@@ -25,8 +25,9 @@ plot_fitlist <- function(fitlist) {
                lowest_BIC = ifelse(1L:nrow(single_count_dat) == which.min(single_count_dat[["BIC"]]), TRUE, FALSE))
   }))
   
-  ggplot(plot_dat, aes(x = model, y = lambda, ymax = upper, ymin = lower, color = lowest_BIC)) +
+  ggplot(droplevels(plot_dat[plot_dat[["model"]] %in% model_names, ]), 
+         aes(x = model, y = lambda, ymax = upper, ymin = lower, color = lowest_BIC)) +
     geom_point() +
     geom_errorbar() +
-    facet_wrap(~ count, scales = "free_y")
+    facet_wrap(~ count)
 }

@@ -18,7 +18,7 @@ fit_counts <- function(counts_list, separate = TRUE, model, level = 0.95, ...) {
     fit_function <- fit_counts_separate
   } else {
     fit_data <- do.call(rbind, lapply(names(counts_list), function(single_name) 
-      data.frame(count_name = single_name, value = healthy_list[[single_name]]))) 
+      data.frame(count_name = single_name, value = counts_list[[single_name]]))) 
     fit_function <- fit_counts_whole
   }
   if(nice_model == "all") {

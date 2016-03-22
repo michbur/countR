@@ -21,9 +21,9 @@ library(ggplot2)
 
 plot_occs(get_occs(tmp))
 
-plot_fitlist(all_fits)
+plot_fitlist(all_fits_whole)
 
-all_compared <- compare_fit(repeat_list, all_fits)
+all_compared <- compare_fit(healthy_list[1L:6], all_fits_whole)
 
 ggplot(all_compared, aes(x = x, y = value)) +
   geom_bar(stat = "identity", fill = NA, color = "black") +

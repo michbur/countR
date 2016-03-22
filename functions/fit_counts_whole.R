@@ -19,6 +19,8 @@ fit_pois_whole <- function(x, level, ...) {
 
 fit_nb_whole <- function(x, level, ...) {
   fit <- MASS::glm.nb(value ~ count_name - 1, data = x, ...)
+  # the data is required for BIC computation
+  fit[["data"]] <- x
   summ <- summary(fit)
   
   coefs <- exp(summ[["coefficients"]][, "Estimate"])

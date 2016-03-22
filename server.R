@@ -47,11 +47,13 @@ shinyServer(function(input, output) {
     get_occs(processed_counts())
   })
   
-  fits <- reactive({
-    fit_counts(processed_counts(), model = "all")
+  fits_separate <- reactive({
+    fit_counts(processed_counts(), separate = TRUE, model = "all")
   })
   
-  #dabset before and after data input
+  fits_whole <- reactive({
+    fit_counts(processed_counts(), separate = FALSE, model = "all")
+  })
   
   output[["input_data"]] <- DT::renderDataTable({
     my_DT(raw_counts())
@@ -82,14 +84,38 @@ shinyServer(function(input, output) {
                                                                    height = 260 + 70 * length(processed_counts()), width = 297,
                                                                    units = "mm")
                                                           })
-  
-  output[["fit_plot"]] <- renderPlot({
-    plot_fitlist(fits())
+  # separate fits  ----------------------------
+  output[["fit_sep_plot"]] <- renderPlot({
+    plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]])
   })
   
-  output[["fit_tab"]] <- DT::renderDataTable({
-    my_DT(summary_fitlist(fits())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
+  output[["fit_sep_plot_db"]] <- downloadHandler("fit_sep_CI.svg",
+                                                          content = function(file) {
+                                                            ggsave(file, plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]]),
+                                                                   device = svg, 
+                                                                   height = 297, width = 297,
+                                                                   units = "mm")
+                                                          })
+  
+  output[["fit_sep_tab"]] <- DT::renderDataTable({
+    my_DT(summary_fitlist(fits_separate())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
   })
   
+  # whole fits  ----------------------------
+  output[["fit_whole_plot"]] <- renderPlot({
+    plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]])
+  })
+  
+  output[["fit_whole_plot_db"]] <- downloadHandler("fit_whole_CI.svg",
+                                                 content = function(file) {
+                                                   ggsave(file, plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]]),
+                                                          device = svg, 
+                                                          height = 297, width = 297,
+                                                          units = "mm")
+                                                 })
+  
+  output[["fit_whole_tab"]] <- DT::renderDataTable({
+    my_DT(summary_fitlist(fits_whole())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
+  })
   
 })
