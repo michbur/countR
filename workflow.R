@@ -9,7 +9,8 @@ load("repeat_list.RData")
 load("healthy_list.RData")
 summary_counts(healthy_list)[["mean"]]
 
-all_fits2 <- fit_counts(healthy_list[1L:6], model = "all")
+all_fits_separate <- fit_counts(healthy_list[1L:6], separate = TRUE, model = "all")
+all_fits_whole <- fit_counts(healthy_list[1L:6], separate = FALSE, model = "all")
 
 max_len <- max(lengths(healthy_list[1L:6]))
 
