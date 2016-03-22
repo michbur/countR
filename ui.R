@@ -32,24 +32,24 @@ shinyUI(navbarPage(title = "countR",
                                        DT::dataTableOutput("input_data_distr_tab")
                               )
                    ),
-                   navbarMenu("Mean value estimated",
+                   navbarMenu("Mean value estimates",
                               tabPanel("Separate models",
-                                       includeMarkdown("./readmes/fitted_models/1.md"),
+                                       includeMarkdown("./readmes/mean_value/1.md"),
                                        plotOutput("fit_sep_plot"),
                                        fluidRow(column(3, downloadButton("fit_sep_plot_db", "Save chart (.svg)")),
                                                 column(3, checkboxGroupInput("models_fit_sep_plot", "Models to plot", 
-                                                                          choices = c("Poisson" = "pois",
-                                                                                      "NB" = "nb",
-                                                                                      "ZIP" = "zip",
-                                                                                      "ZINB" = "zinb"), 
-                                                                          selected = c("pois", "nb", "zip", "zinb")
-                                                       ))
+                                                                             choices = c("Poisson" = "pois",
+                                                                                         "NB" = "nb",
+                                                                                         "ZIP" = "zip",
+                                                                                         "ZINB" = "zinb"), 
+                                                                             selected = c("pois", "nb", "zip", "zinb")
+                                                ))
                                        ),
-                                       includeMarkdown("./readmes/fitted_models/2.md"),
+                                       includeMarkdown("./readmes/mean_value/2.md"),
                                        DT::dataTableOutput("fit_sep_tab")
                               ),
                               tabPanel("Single model",
-                                       includeMarkdown("./readmes/fitted_models/3.md"),
+                                       includeMarkdown("./readmes/mean_value/3.md"),
                                        plotOutput("fit_whole_plot"),
                                        fluidRow(column(3, downloadButton("fit_whole_plot_db", "Save chart (.svg)")),
                                                 column(3, checkboxGroupInput("models_fit_whole_plot", "Models to plot",
@@ -60,8 +60,22 @@ shinyUI(navbarPage(title = "countR",
                                                                              selected = c("pois", "nb", "zip", "zinb")
                                                 ))
                                        ),
-                                       includeMarkdown("./readmes/fitted_models/4.md"),
+                                       includeMarkdown("./readmes/mean_value/4.md"),
                                        DT::dataTableOutput("fit_whole_tab")
+                              )
+                   ),
+                   navbarMenu("Compare distributions",
+                              tabPanel("Separate models",
+                                       includeMarkdown("./readmes/cmp_distr/1.md"),
+                                       plotOutput("cmp_sep_plot"),
+                                       fluidRow(column(3, downloadButton("cmp_sep_plot_db", "Save chart (.svg)"))),
+                                       DT::dataTableOutput("cmp_sep_tab")
+                              ),
+                              tabPanel("Single model",
+                                       includeMarkdown("./readmes/cmp_distr/2.md"),
+                                       plotOutput("cmp_whole_plot"),
+                                       fluidRow(column(3, downloadButton("cmp_whole_plot_db", "Save chart (.svg)"))),
+                                       DT::dataTableOutput("cmp_whole_tab")
                               )
                    )
 ))

@@ -7,9 +7,10 @@ source("load_all.R")
 options(DT.options = list(dom = 'T<"clear">lfrtip',
                           tableTools = list(sSwfPath = copySWF("./www/"),
                                             aButtons = list(
-                                              "copy",
-                                              "print",
-                                              "csv"
+                                              #"copy",
+                                              #"csv",
+                                              "print"
+                                              # only print works even with flash enabled
                                             )
                           )
 ))
@@ -55,6 +56,14 @@ shinyServer(function(input, output) {
     fit_counts(processed_counts(), separate = FALSE, model = "all")
   })
   
+  compared_fits_sep <- reactive({
+    compare_fit(processed_counts(), fits_separate())
+  })
+  
+  compared_fits_whole <- reactive({
+    compare_fit(processed_counts(), fits_whole())
+  })
+  
   output[["input_data"]] <- DT::renderDataTable({
     my_DT(raw_counts())
   })
@@ -84,7 +93,7 @@ shinyServer(function(input, output) {
                                                                    height = 260 + 70 * length(processed_counts()), width = 297,
                                                                    units = "mm")
                                                           })
-  # separate fits  ----------------------------
+  # separate fits, mean values ----------------------------
   output[["fit_sep_plot"]] <- renderPlot({
     plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]])
   })
@@ -101,7 +110,7 @@ shinyServer(function(input, output) {
     my_DT(summary_fitlist(fits_separate())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
   })
   
-  # whole fits  ----------------------------
+  # whole fits, mean values ----------------------------
   output[["fit_whole_plot"]] <- renderPlot({
     plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]])
   })
@@ -116,6 +125,41 @@ shinyServer(function(input, output) {
   
   output[["fit_whole_tab"]] <- DT::renderDataTable({
     my_DT(summary_fitlist(fits_whole())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
+  })
+  
+  
+  # separate fits, compare distrs ----------------------------
+  output[["cmp_sep_plot"]] <- renderPlot({
+    plot_fitcmp(compared_fits_sep())
+  })
+  
+  output[["cmp_sep_plot_db"]] <- downloadHandler("cmp_sep.svg",
+                                                 content = function(file) {
+                                                   ggsave(file, plot_fitcmp(compared_fits_sep()),
+                                                          device = svg, 
+                                                          height = 297, width = 297,
+                                                          units = "mm")
+                                                 })
+  
+  output[["cmp_sep_tab"]] <- DT::renderDataTable({
+    my_DT(compared_fits_sep())
+  })
+  
+  # whole fits, compare distrs ----------------------------
+  output[["cmp_whole_plot"]] <- renderPlot({
+    plot_fitcmp(compared_fits_sep())
+  })
+  
+  output[["cmp_whole_plot_db"]] <- downloadHandler("cmp_whole.svg",
+                                                 content = function(file) {
+                                                   ggsave(file, plot_fitcmp(compared_fits_sep()),
+                                                          device = svg, 
+                                                          height = 297, width = 297,
+                                                          units = "mm")
+                                                 })
+  
+  output[["cmp_whole_tab"]] <- DT::renderDataTable({
+    my_DT(compared_fits_whole())
   })
   
 })

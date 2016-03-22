@@ -33,10 +33,18 @@ compare_fit <- function(count_list, fitlist = fit_counts(count_list, model = "al
     
     cmp <- cbind(count = names(count_list)[single_count_id], model = model_names, 
                  do.call(rbind, lapply(fitlist[count_ids[[single_count_id]]], function(single_fit) 
-                   cbind(occs, value = get_density_fun(single_fit)(occs[["x"]]) * sum(count_list[[single_count_id]]))
+                   cbind(occs, value = get_density_fun(single_fit)(occs[["x"]]) * length(count_list[[single_count_id]]))
                  )))
     rownames(cmp) <- NULL
     
     cmp
   }))
 }
+
+plot_fitcmp <- function(fitcmp) {
+  ggplot(fitcmp, aes(x = x, y = value)) +
+    geom_bar(stat = "identity", fill = NA, color = "black") +
+    facet_grid(model ~ count) +
+    geom_point(aes(x = x, y = n))
+}
+
