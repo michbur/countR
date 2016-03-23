@@ -77,5 +77,9 @@ shinyUI(navbarPage(title = "countR",
                                        fluidRow(column(3, downloadButton("cmp_whole_plot_db", "Save chart (.svg)"))),
                                        DT::dataTableOutput("cmp_whole_tab")
                               )
+                   ),
+                   navbarMenu("Help",
+                              tabPanel("About",
+                                       includeMarkdown("./readmes/about.md"))
                    )
 ))

@@ -1,7 +1,6 @@
 library(shiny)
 library(DT)
-library(reshape2)
-library(ggplot2)
+
 source("load_all.R")
 
 options(DT.options = list(dom = 'T<"clear">lfrtip',
@@ -25,13 +24,13 @@ shinyServer(function(input, output) {
   raw_counts <- reactive({
     # if there is no data, example is loaded
     if(is.null(input[["input_file"]])) {
-      dat <- read.csv("example_counts.csv")
+      dat <- read.csv("example_counts.csv", check.names = FALSE)
     } else {
       dat <- switch(input[["csv_type"]], 
                     csv1 = read.csv(input[["input_file"]][["datapath"]], 
-                                    header = input[["header"]]),
+                                    header = input[["header"]], check.names = FALSE),
                     csv2 = read.csv2(input[["input_file"]][["datapath"]], 
-                                     header = input[["header"]]))
+                                     header = input[["header"]], check.names = FALSE))
       if(!input[["header"]])
         colnames(dat) <- paste0("C", 1L:ncol(dat))
       

@@ -13,7 +13,8 @@ summary_fitlist <- function(fitlist) {
              BIC = unlist(lapply(fitlist, function(single_fit) single_fit[["BIC"]])), 
              theta = unlist(lapply(fitlist, function(single_fit) single_fit[["coefficients"]]["theta"])),
              r = unlist(lapply(fitlist, function(single_fit) single_fit[["coefficients"]]["r"])),
-             model = vapply(fitlist, function(single_fit) single_fit[["model"]], "a"))
+             model = vapply(fitlist, function(single_fit) single_fit[["model"]], "a"),
+             nice_model = nice_model_names[vapply(fitlist, function(single_fit) single_fit[["model"]], "a")])
 }
 
 plot_fitlist <- function(fitlist, model_names = c("pois", "nb", "zip", "zinb")) {
@@ -26,8 +27,12 @@ plot_fitlist <- function(fitlist, model_names = c("pois", "nb", "zip", "zinb")) 
   }))
   
   ggplot(droplevels(plot_dat[plot_dat[["model"]] %in% model_names, ]), 
-         aes(x = model, y = lambda, ymax = upper, ymin = lower, color = lowest_BIC)) +
+         aes(x = nice_model, y = lambda, ymax = upper, ymin = lower, color = lowest_BIC)) +
     geom_point() +
     geom_errorbar() +
-    facet_wrap(~ count)
+    facet_wrap(~ count) +
+    scale_x_discrete("Model") +
+    scale_y_continuous(expression(lambda)) + 
+    scale_color_discrete("The lowest BIC") +
+    my_theme
 }

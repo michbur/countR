@@ -27,10 +27,11 @@ get_occs <- function(count_list)
     occs <- data.frame(count = single_count_name, fast_tabulate(count_list[[single_count_name]]))
   ))
 
-plot_occs <- function(occs)
+plot_occs <- function(occs) 
   ggplot(occs, aes(x = x, y = n, label = n)) +
   geom_bar(stat = "identity") +
   geom_text(vjust = -0.25) +
   scale_y_continuous("Frequency", limits = c(0, max(occs[["n"]]*1.2))) +
   scale_x_continuous("Count") +
-  facet_wrap(~ count, ncol = 1)
+  facet_wrap(~ count, ncol = 1) +
+  my_theme
