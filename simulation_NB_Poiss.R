@@ -12,7 +12,7 @@ sim_dat <- do.call(rbind, pblapply(10^(-3L:2), function(single_theta)
       
       fit_counts(foci, separate = TRUE, model = "all") %>%
         summary_fitlist %>% 
-        mutate(between = single_theta < upper & single_theta > lower) %>%
+        mutate(between = single_lambda < upper & single_lambda > lower) %>%
         group_by(model) %>% 
         summarize(prop = mean(between)) %>%
         mutate(replicate = single_rep, lambda = single_lambda, theta = single_theta)
