@@ -147,7 +147,7 @@ shinyServer(function(input, output) {
   
   # whole fits, compare distrs ----------------------------
   output[["cmp_whole_plot"]] <- renderPlot({
-    plot_fitcmp(compared_fits_sep())
+    plot_fitcmp(compared_fits_whole())
   })
   
   output[["cmp_whole_plot_db"]] <- downloadHandler("cmp_whole.svg",

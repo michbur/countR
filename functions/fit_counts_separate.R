@@ -57,7 +57,6 @@ fit_zinb_separate <- function(x, level, ...) {
   )
 }
 
-
 transform_zi_confint <- function(confint_data) {
   rownames(confint_data) <- c("lambda", "r")
   colnames(confint_data) <- c("lower", "upper")
@@ -71,17 +70,21 @@ transform_zi_confint <- function(confint_data) {
 fit_counts_separate <- function(counts_list, model, level, ...) {
   
   lapply(counts_list, function(x) {
-    fitted_model <- switch(model,
-                           pois = fit_pois_separate(x, level = level, ...),
-                           nb = fit_nb_separate(x, level = level, ...),
-                           zip = fit_zip_separate(x, level = level, ...),
-                           zinb = fit_zinb_separate(x, level = level, ...)
-    )
+    fitted_model <- tryCatch(switch(model,
+                                    pois = fit_pois_separate(x, level = level, ...),
+                                    nb = fit_nb_separate(x, level = level, ...),
+                                    zip = fit_zip_separate(x, level = level, ...),
+                                    zinb = fit_zinb_separate(x, level = level, ...)
+    ), error = function(e) no_fit())
     
     list(coefficients = fitted_model[["coefficients"]],
          confint = fitted_model[["confint"]],
-         #c(fitted_model, 
-         BIC = AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))),
+         #c(fitted_model,
+         # don't compute BIC if no model is fitted
+         BIC = ifelse(any(class(fitted_model[["fit"]]) %in% c("glm", "zeroinfl")), 
+                      AIC(fitted_model[["fit"]], k = log(sum(!is.na(x)))),
+                      NA),
          model = model)
   })
 }
+

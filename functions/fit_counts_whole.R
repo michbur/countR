@@ -12,8 +12,7 @@ fit_pois_whole <- function(x, level, ...) {
        coefficients = lapply(coefs, function(single_coef) c(lambda = single_coef)),
        confint = lapply(1L:nrow(confint_raw), 
                         function(single_row) 
-                          matrix(confint_raw[single_row, ], ncol = 2, dimnames = list("lambda", c("lower", "upper")))),
-       model = "pois"
+                          matrix(confint_raw[single_row, ], ncol = 2, dimnames = list("lambda", c("lower", "upper"))))
   )
 }
 
@@ -33,8 +32,7 @@ fit_nb_whole <- function(x, level, ...) {
        coefficients = lapply(coefs, function(single_coef) c(lambda = single_coef, theta = summ[["theta"]])),
        confint = lapply(1L:nrow(confint_raw), 
                         function(single_row) 
-                          matrix(confint_raw[single_row, ], ncol = 2, dimnames = list("lambda", c("lower", "upper")))),
-       model = "nb"
+                          matrix(confint_raw[single_row, ], ncol = 2, dimnames = list("lambda", c("lower", "upper"))))
   )
 }
 
@@ -55,8 +53,7 @@ fit_zip_whole <- function(x, level, ...) {
   list(fit = fit,
        coefficients = coefs,
        confint = lapply(1L:(nrow(confint_raw)/2), function(single_confint) 
-         transform_zi_confint(confint_raw[c(single_confint + c(0, 6)), ])),
-       model = "zip"
+         transform_zi_confint(confint_raw[c(single_confint + c(0, 6)), ]))
   )
 }
 
@@ -79,30 +76,35 @@ fit_zinb_whole <- function(x, level, ...) {
   list(fit = fit,
        coefficients = coefs,
        confint = lapply(1L:(nrow(confint_raw)/2), function(single_confint) 
-         transform_zi_confint(confint_raw[c(single_confint + c(0, 6)), ])),
-       model = "zinb"
+         transform_zi_confint(confint_raw[c(single_confint + c(0, 6)), ]))
   )
 }
 
-fit2fitlist <- function(x) {
+fit2fitlist <- function(x, model) {
   BIC_val <- AIC(x[["fit"]], k = log(sum(!is.na(x[["fit"]][["data"]][["value"]]))))
+  
   fitlist <- lapply(1L:length(x[["coefficients"]]), function(single_count) {
     list(coefficients = x[["coefficients"]][[single_count]],
          confint = x[["confint"]][[single_count]],
          BIC = BIC_val,
-         model = x[["model"]])
+         model = model)
   })
   names(fitlist) <- names(x[["coefficients"]])
   fitlist
 }
 
 fit_counts_whole <- function(x, model, level, ...) {
-  fitted_model <- fit2fitlist(switch(model,
-                         pois = fit_pois_whole(x, level = level, ...),
-                         nb = fit_nb_whole(x, level = level, ...),
-                         zip = fit_zip_whole(x, level = level, ...),
-                         zinb = fit_zinb_whole(x, level = level, ...)
-  ))
+  tryCatch(fit2fitlist(switch(model,
+                              pois = fit_pois_whole(x, level = level, ...),
+                              nb = fit_nb_whole(x, level = level, ...),
+                              zip = fit_zip_whole(x, level = level, ...),
+                              zinb = fit_zinb_whole(x, level = level, ...)
+  ), model = model), error = function(e) sapply(levels(x[["count_name"]]), 
+                                                # add underscore to make it like normal fits 
+                                                function(single_count) single_count = c(no_fit(),
+                                                                                        BIC = NA,
+                                                                                        model = model),
+                                                simplify = FALSE))
   
   # list(coefficients = fitted_model[["coefficients"]], 
   #      confint = fitted_model[["confint"]],

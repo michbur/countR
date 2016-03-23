@@ -30,5 +30,20 @@ ggplot(all_compared, aes(x = x, y = value)) +
   facet_grid(model ~ count) +
   geom_point(aes(x = x, y = n))
 
+patient_id <- names(healthy_list) %>% 
+  strsplit("_") %>%
+  sapply(last)
+
+lapply(unique(patient_id), function(single_patient) {
+  print(single_patient)
+  fit_counts(healthy_list[patient_id == single_patient], separate = FALSE, model = "all")
+})
 
 
+
+max_len <- max(lengths(healthy_list[patient_id == 72]))
+
+write.csv(do.call(cbind, lapply(healthy_list[patient_id == 72], function(i)
+  c(i, rep(NA, max_len - length(i))))), file = "six_replicates_bad.csv", row.names = FALSE)
+
+compare_fit(healthy_list[patient_id == 72], fit_counts(healthy_list[patient_id == 72], separate = FALSE, model = "all"))

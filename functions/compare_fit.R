@@ -1,15 +1,19 @@
 # returns density function
 get_density_fun <- function(single_fit) {
-  switch(single_fit[["model"]],
-         pois = function(x) dpois(x, lambda = single_fit[["coefficients"]][["lambda"]]), 
-         nb = function(x) dnbinom(x, size = single_fit[["coefficients"]][["theta"]], 
-                                  mu = single_fit[["coefficients"]][["lambda"]]),
-         zip = function(x) dZIP(x, lambda = single_fit[["coefficients"]][["lambda"]], 
-                                p = 1 - single_fit[["coefficients"]][["r"]]),
-         zinb = function(x) dZINB(x, size = single_fit[["coefficients"]][["theta"]], 
-                                  lambda = single_fit[["coefficients"]][["lambda"]], 
-                                  p = 1 - single_fit[["coefficients"]][["r"]])
-  )
+  if(is.na(single_fit[["coefficients"]][["lambda"]])) {
+    function(x) NA
+  } else {
+    switch(single_fit[["model"]],
+           pois = function(x) dpois(x, lambda = single_fit[["coefficients"]][["lambda"]]), 
+           nb = function(x) dnbinom(x, size = single_fit[["coefficients"]][["theta"]], 
+                                    mu = single_fit[["coefficients"]][["lambda"]]),
+           zip = function(x) dZIP(x, lambda = single_fit[["coefficients"]][["lambda"]], 
+                                  p = 1 - single_fit[["coefficients"]][["r"]]),
+           zinb = function(x) dZINB(x, size = single_fit[["coefficients"]][["theta"]], 
+                                    lambda = single_fit[["coefficients"]][["lambda"]], 
+                                    p = 1 - single_fit[["coefficients"]][["r"]])
+    )
+  }
 }
 
 
