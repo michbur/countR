@@ -12,7 +12,7 @@ library(ggplot2)
 # fit_counts(foci, separate = TRUE, model = "all")
 
 # can all models be fitted?
-filter(sim_dat, !is.na(lambda)) %>%
+filter(sim_dat, !is.na(prop)) %>%
   group_by(theta, lambda) %>%
   summarize(proper_fits = length(replicate)/400) %>%
   ggplot(aes(x = factor(theta), y = factor(lambda), fill = proper_fits, 
@@ -22,17 +22,39 @@ filter(sim_dat, !is.na(lambda)) %>%
 # no, for some combinations of theta and lambda models cannot be fitted
 
 
-# 
-filter(sim_dat, !is.na(prop), model != "zinb") %>%
+# the mean number of times, when lambda is between the real lambda
+# red numbers represent number of replicates
+# we consider ONLY situations, where all four models can be fitted
+filter(sim_dat, !is.na(prop)) %>%
   group_by(theta, lambda, replicate) %>%
-  mutate(all_models = length(prop) == 3) %>% 
-  filter(all_models) %>%
+  mutate(all_models = length(prop) == 4) %>%
+  filter(all_models) %>% 
+  group_by(theta, lambda) %>%
+  mutate(fitted_reps = length(prop)) %>%
   group_by(theta, lambda, model) %>% 
-  summarise(prop = median(prop)) %>%
+  mutate(prop = mean(prop)) %>%
+  distinct %>%
   ggplot(aes(x = factor(theta), y = factor(lambda), fill = prop, 
-             label = formatC(prop, digits = 2, format = "f"))) +
+             label = formatC(fitted_reps, digits = 0, format = "f"))) +
   geom_tile(color = "black") +
-  geom_text(color = "red") +
-  facet_wrap(~ model)
+  geom_text(color = "blue") +
+  facet_wrap(~ model) +
+  scale_fill_gradient2(midpoint = 0, mid = "red", high = "yellow")
 
 
+# the mean number of times, when lambda is between the real lambda
+# red numbers represent number of replicates
+# we consider ONLY situations, where all four models can be fitted
+filter(sim_dat, !is.na(prop)) %>%
+  group_by(theta, lambda, replicate) %>%
+  group_by(theta, lambda) %>%
+  mutate(fitted_reps = length(prop)) %>%
+  group_by(theta, lambda, model) %>% 
+  mutate(prop = mean(prop)) %>%
+  distinct %>%
+  ggplot(aes(x = factor(theta), y = factor(lambda), fill = prop, 
+             label = formatC(fitted_reps, digits = 0, format = "f"))) +
+  geom_tile(color = "black") +
+  geom_text(color = "blue") +
+  facet_wrap(~ model) +
+  scale_fill_gradient2(midpoint = 0, mid = "red", high = "yellow")
