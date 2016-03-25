@@ -80,6 +80,8 @@ shinyUI(navbarPage(title = "countR",
                    ),
                    navbarMenu("Help",
                               tabPanel("About",
-                                       includeMarkdown("./readmes/about.md"))
+                                       includeMarkdown("./readmes/about.md")),
+                              tabPanel("Help",
+                                       includeHTML("./readmes/manual.html"))
                    )
 ))
