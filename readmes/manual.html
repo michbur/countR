@@ -113,15 +113,20 @@ $(document).ready(function () {
 </div>
 
 
-<div id="count-data-distributions" class="section level1">
-<h1>Count data distributions</h1>
+<div id="overdispersion" class="section level1">
+<h1>Overdispersion</h1>
+<p>One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Bi9nomial (NB) and Zero-negative Binomial (ZINB) can model overdispersed counts.</p>
+<p>Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have NB distribution. The other cause of overdispersion is called zero-inflation and occurs in data set, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.</p>
+</div>
+<div id="overdispersed-count-data-distributions" class="section level1">
+<h1>Overdispersed count data distributions</h1>
 <p>Parameters:</p>
 <ul>
 <li><span class="math">\(\lambda\)</span> - Poisson parameter (average number of foci per cell).<br /></li>
-<li><span class="math">\(r\)</span> - zero inflation (fraction of cells treated by system as having no foci regardless of their real state)<br /></li>
+<li><span class="math">\(r\)</span> - zero inflation (fraction of cells treated by system as having no foci regardless of their real state).<br /></li>
 <li><span class="math">\(\theta\)</span> - dispersion parameter.</li>
 </ul>
-<p>Usually the NB distribution is parametrized using <span class="math">\(\mu\)</span> and <span class="math">\(\theta\)</span>, but to make comparison clearer, we use <span class="math">\(\lambda\)</span> instead of <span class="math">\(\mu\)</span>. In this parametrization, NB and ZINB are treated as the mixture of Poisson and Gamma (<span class="math">\(\Gamma\)</span>) distributions.</p>
+<p>Usually the NB distribution is parameterized using <span class="math">\(\mu\)</span> and <span class="math">\(\theta\)</span>, but to make comparison clearer, we use <span class="math">\(\lambda\)</span> instead of <span class="math">\(\mu\)</span>. In this parameterization, NB and ZINB are treated as the mixture of Poisson and Gamma (<span class="math">\(\Gamma\)</span>) distributions.</p>
 <table>
 <thead>
 <tr class="header">
@@ -148,7 +153,7 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<p>Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real avarage number of foci per cell.</p>
+<p>Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real average number of foci per cell.</p>
 <table>
 <thead>
 <tr class="header">
@@ -202,11 +207,6 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-</div>
-<div id="overdispersion" class="section level1">
-<h1>Overdispersion</h1>
-<p>One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger then the mean. Three distributions included in countR: ZIP, NB and ZINB can model overdispersed counts.</p>
-<p>Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have negative binomial distribution. The other cause of overdispersion is called zero-inflation and occurrs in data set, where some factor introduced faultly zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.</p>
 </div>
 
 

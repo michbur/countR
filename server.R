@@ -1,11 +1,13 @@
 library(shiny)
+# must use development DT
+# devtools::install_github('rstudio/DT')
 library(DT)
 library(reshape2)
 
 source("load_all.R")
 
-options(DT.options = list(dom = 'Bfrtip',
-                          buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+options(DT.options = list(dom = "Bfrtip",
+                          buttons = c("copy", "csv", "excel", "pdf", "print")
 ))
 
 my_DT <- function(x)

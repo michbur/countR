@@ -5,12 +5,18 @@ output:
     theme: cerulean
 ---
 
-# Count data distributions
+# Overdispersion
+
+One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Bi9nomial (NB) and Zero-negative Binomial (ZINB) can model overdispersed counts. 
+
+Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have NB distribution. The other cause of overdispersion is called zero-inflation and occurs in data set, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
+
+# Overdispersed count data distributions
 
 Parameters:
 
 * $\lambda$ - Poisson parameter (average number of foci per cell).  
-* $r$ - zero inflation (fraction of cells treated by system as having no foci regardless of their real state)  
+* $r$ - zero inflation (fraction of cells treated by system as having no foci regardless of their real state).  
 * $\theta$ - dispersion parameter.
   
 Usually the NB distribution is parameterized using $\mu$ and $\theta$, but to make comparison clearer, we use $\lambda$ instead of $\mu$. In this parameterization, NB and ZINB are treated as the mixture of Poisson and Gamma ($\Gamma$) distributions.  
@@ -40,8 +46,4 @@ ZIP                |$$\textrm{var}(X) = \lambda (1 - r)(1 + \lambda r)$$
 NB                 |$$\textrm{var}(X) = \lambda + \frac{\lambda^2}{\theta} $$
 ZINB               |$$\textrm{var}(X) = (1 - r) \lambda \left( 1 + r\lambda  + \frac{1}{\theta} \right)$$
 
-# Overdispersion
-
-One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger than the mean. Three distributions included in countR: ZIP, NB and ZINB can model overdispersed counts. 
-
-Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have negative binomial distribution. The other cause of overdispersion is called zero-inflation and occurs in data set, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution. 
+ 
