@@ -13,7 +13,7 @@ Parameters:
 * $r$ - zero inflation (fraction of cells treated by system as having no foci regardless of their real state)  
 * $\theta$ - dispersion parameter.
   
-Usually the NB distribution is parametrized using $\mu$ and $\theta$, but to make comparison clearer, we use $\lambda$ instead of $\mu$. In this parametrization, NB and ZINB are treated as the mixture of Poisson and Gamma ($\Gamma$) distributions.  
+Usually the NB distribution is parameterized using $\mu$ and $\theta$, but to make comparison clearer, we use $\lambda$ instead of $\mu$. In this parameterization, NB and ZINB are treated as the mixture of Poisson and Gamma ($\Gamma$) distributions.  
 
 Distribution name  | pmf 
 -------------------|-------------
@@ -22,7 +22,7 @@ ZIP                |$$P\{X = k\} = \begin{cases} r + ( 1- r) \exp^{-\lambda},\te
 NB                 |$$P\{X = k\} = \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k$$
 ZINB               |$$P\{X = k\} = \begin{cases}r + (1 - r) \left( \frac{\theta}{\theta + \lambda} \right)^\theta,\text{if } k = 0\\(1 - r) \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k,\text{if } k = 1, 2, \ldots\end{cases}$$
 
-Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real avarage number of foci per cell.
+Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real average number of foci per cell.
 
 Distribution name  | Expected value
 -------------------|-------------
@@ -42,6 +42,6 @@ ZINB               |$$\textrm{var}(X) = (1 - r) \lambda \left( 1 + r\lambda  + \
 
 # Overdispersion
 
-One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger then the mean. Three distributions included in countR: ZIP, NB and ZINB can model overdispersed counts. 
+One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger than the mean. Three distributions included in countR: ZIP, NB and ZINB can model overdispersed counts. 
 
-Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have negative binomial distribution. The other cause of overdispersion is called zero-inflation and occurrs in data set, where some factor introduced faultly zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution. 
+Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have negative binomial distribution. The other cause of overdispersion is called zero-inflation and occurs in data set, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution. 

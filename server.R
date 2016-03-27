@@ -4,19 +4,12 @@ library(reshape2)
 
 source("load_all.R")
 
-options(DT.options = list(dom = 'T<"clear">lfrtip',
-                          tableTools = list(sSwfPath = copySWF("./www/"),
-                                            aButtons = list(
-                                              #"copy",
-                                              #"csv",
-                                              "print"
-                                              # only print works even with flash enabled
-                                            )
-                          )
+options(DT.options = list(dom = 'Bfrtip',
+                          buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
 ))
 
 my_DT <- function(x)
-  datatable(x, escape = FALSE, extensions = 'TableTools', 
+  datatable(x, escape = FALSE, extensions = 'Buttons', 
             filter = "top", rownames = FALSE)
 
 
@@ -99,12 +92,12 @@ shinyServer(function(input, output) {
   })
   
   output[["fit_sep_plot_db"]] <- downloadHandler("fit_sep_CI.svg",
-                                                          content = function(file) {
-                                                            ggsave(file, plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]]),
-                                                                   device = svg, 
-                                                                   height = 297, width = 297,
-                                                                   units = "mm")
-                                                          })
+                                                 content = function(file) {
+                                                   ggsave(file, plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]]),
+                                                          device = svg, 
+                                                          height = 297, width = 297,
+                                                          units = "mm")
+                                                 })
   
   output[["fit_sep_tab"]] <- DT::renderDataTable({
     my_DT(summary_fitlist(fits_separate())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
@@ -116,12 +109,12 @@ shinyServer(function(input, output) {
   })
   
   output[["fit_whole_plot_db"]] <- downloadHandler("fit_whole_CI.svg",
-                                                 content = function(file) {
-                                                   ggsave(file, plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]]),
-                                                          device = svg, 
-                                                          height = 297, width = 297,
-                                                          units = "mm")
-                                                 })
+                                                   content = function(file) {
+                                                     ggsave(file, plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]]),
+                                                            device = svg, 
+                                                            height = 297, width = 297,
+                                                            units = "mm")
+                                                   })
   
   output[["fit_whole_tab"]] <- DT::renderDataTable({
     my_DT(summary_fitlist(fits_whole())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
@@ -151,12 +144,12 @@ shinyServer(function(input, output) {
   })
   
   output[["cmp_whole_plot_db"]] <- downloadHandler("cmp_whole.svg",
-                                                 content = function(file) {
-                                                   ggsave(file, plot_fitcmp(compared_fits_sep()),
-                                                          device = svg, 
-                                                          height = 297, width = 297,
-                                                          units = "mm")
-                                                 })
+                                                   content = function(file) {
+                                                     ggsave(file, plot_fitcmp(compared_fits_sep()),
+                                                            device = svg, 
+                                                            height = 297, width = 297,
+                                                            units = "mm")
+                                                   })
   
   output[["cmp_whole_tab"]] <- DT::renderDataTable({
     my_DT(compared_fits_whole())
