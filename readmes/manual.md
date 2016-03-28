@@ -21,13 +21,18 @@ This panel contains descriptiuve statistics and summaries of the input data. It 
 2. *Summary*: Summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).  
 3. *Distribution*: A bar chart of the counts distribution followed by a pivot table.  
 
+## Mean value estimators
+
+Estimators of the mean number of all models.
+
+
 # Overdispersion
 
 One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
 
 Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
 
-# Overdispersed count data distributions
+## Overdispersed count data distributions
 
 Parameters:
 

@@ -7,7 +7,7 @@ library(reshape2)
 source("load_all.R")
 
 options(DT.options = list(dom = "Bfrtip",
-                          buttons = c("copy", "csv", "excel", "pdf", "print")
+                          buttons = c("copy", "csv", "excel", "print")
 ))
 
 my_DT <- function(x)
