@@ -7,9 +7,9 @@ output:
 
 # Overdispersion
 
-One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Bi9nomial (NB) and Zero-negative Binomial (ZINB) can model overdispersed counts. 
+One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
 
-Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have NB distribution. The other cause of overdispersion is called zero-inflation and occurs in data set, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
+Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
 
 # Overdispersed count data distributions
 
