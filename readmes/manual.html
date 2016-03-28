@@ -112,11 +112,33 @@ $(document).ready(function () {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#usage-of-countr">Usage of countR</a><ul>
+<li><a href="#data-upload">Data upload</a></li>
+<li><a href="#count-data">Count data</a></li>
+</ul></li>
+<li><a href="#overdispersion">Overdispersion</a></li>
+<li><a href="#overdispersed-count-data-distributions">Overdispersed count data distributions</a></li>
+</ul>
+</div>
 
+<div id="usage-of-countr" class="section level1">
+<h1>Usage of countR</h1>
+<p>Each chart is downloadable in the .svg format. A download button is always located at the top of a chart. Tables may be also downloaded using the buttons at the top of the table.</p>
+<div id="data-upload" class="section level2">
+<h2>Data upload</h2>
+<p>The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by C.</p>
+</div>
+<div id="count-data" class="section level2">
+<h2>Count data</h2>
+<p>This panel contains descriptiuve statistics and summaries of the input data. It consists of three subpanels:<br />1. <em>Count table</em>: Input data in the tabular format allowing sanity checks of the proper upload.<br />2. <em>Summary</em>: Summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).<br />3. <em>Distribution</em>: A bar chart of the counts distribution followed by a pivot table.</p>
+</div>
+</div>
 <div id="overdispersion" class="section level1">
 <h1>Overdispersion</h1>
-<p>One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed data set, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Bi9nomial (NB) and Zero-negative Binomial (ZINB) can model overdispersed counts.</p>
-<p>Overdispersion may be caused by the increased variability of the counts, for example the counting algorithm under- and overcounts. In such situation the data might have NB distribution. The other cause of overdispersion is called zero-inflation and occurs in data set, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.</p>
+<p>One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts.</p>
+<p>Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.</p>
 </div>
 <div id="overdispersed-count-data-distributions" class="section level1">
 <h1>Overdispersed count data distributions</h1>

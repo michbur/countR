@@ -3,7 +3,23 @@ output:
   html_document: 
     self_contained: no
     theme: cerulean
+    toc: yes
 ---
+
+# Usage of countR
+
+Each chart is downloadable in the .svg format. A download button is always located at the top of a chart. Tables may be also downloaded using the buttons at the top of the table.
+
+## Data upload
+
+The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by C.  
+
+## Count data
+
+This panel contains descriptiuve statistics and summaries of the input data. It consists of three subpanels:  
+1. *Count table*: Input data in the tabular format allowing sanity checks of the proper upload.  
+2. *Summary*: Summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).  
+3. *Distribution*: A bar chart of the counts distribution followed by a pivot table.  
 
 # Overdispersion
 
