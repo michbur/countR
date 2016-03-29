@@ -1,0 +1,53 @@
+---
+title: "countReport"
+author: "Michal Burdukiewicz, Stefan Roediger"
+date: ""
+output:
+html_document:
+css: report.css
+toc: true
+---
+
+# countR
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+opts_chunk$set(echo=FALSE, results='asis', fig.align='center', fig.width=14, warning = FALSE)
+# TO DO add warning = FALSE later
+library(xtable)
+
+print_table <- function(x)
+  print(xtable(x), type = "html", sanitize.colnames.function = function(x) x, digits = 4,
+        include.rownames = FALSE)
+
+```
+
+Report generated on `r Sys.time()`.
+
+Detected input file: `r ifelse(is.null(input[["input_file"]][["name"]]), "none", input[["input_file"]][["name"]])`.  
+
+```{r}
+if(input[["mean_value_rep"]]) {
+  cat("\n",readLines("./readmes/mean_value/1.md"), sep = "    \n")
+  plot(plot_fitlist(fits(), input[["models_fit_plot"]]))
+  dat <- summary_fitlist(fits())[, c("count", "lambda", "lower", "upper", "BIC", "model")]
+  cat("\n",readLines("./readmes/mean_value/2.md"), sep = "    \n")
+  print_table(dat)
+}
+```
+
+
+```{r}
+if(input[["cmp_distr_rep"]]) {
+  cat("\n", readLines("./readmes/cmp_distr/1.md"), sep = "    \n")
+  plot(plot_fitcmp(compared_fits()))
+  cat("\n")
+  print_table(compared_fits())
+}
+```
+
+# R Session
+
+```{r,results='markup'}
+sessionInfo()
+```

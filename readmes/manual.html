@@ -128,20 +128,18 @@ $(document).ready(function () {
 
 <div id="usage-of-countr" class="section level1">
 <h1>Usage of countR</h1>
-<p>Each chart is downloadable in the .svg format. A download button is always located at the top of a chart. Tables may be also downloaded using the buttons at the top of the table.</p>
+<p>Each chart may be saved in the .svg format. A download button is always located at the top of a chart. Tables may be also downloaded using the buttons at the top of the table.</p>
 <div id="data-upload" class="section level2">
 <h2>Data upload</h2>
-<p>The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by ‘C’.</p>
+<p>The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the “Header” checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by ‘C’.</p>
 </div>
 <div id="settings" class="section level2">
 <h2>Settings</h2>
-<p><strong>Separate experiments</strong>: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually. Otherwise, the counts are fitted together to a single distribution following the model:</p>
-<p><span class="math display">\[Y = \beta C \]</span></p>
-<p>where Y are counts and C is a vector of counts names, a categorical variable. <span class="math inline">\(\beta\)</span> is a vector of coefficients and <span class="math inline">\(exp(\beta) = \lambda\)</span>. Notice that the model does not have the intercept.</p>
+<p><strong>Separate experiments</strong>: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates.</p>
 </div>
 <div id="count-data" class="section level2">
 <h2>Count data</h2>
-<p>This panel contains descriptiuve statistics and summaries of the input data. It consists of three subpanels:<br />
+<p>This panel contains descriptive statistics and summaries of the input data. It consists of three subpanels:<br />
 1. <em>Count table</em>: Input data in the tabular format allowing sanity checks of the proper upload.<br />
 2. <em>Summary</em>: Summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).<br />
 3. <em>Distribution</em>: A bar chart of the counts distribution followed by a pivot table.</p>

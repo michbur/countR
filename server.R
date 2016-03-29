@@ -47,7 +47,7 @@ shinyServer(function(input, output) {
     fit_counts(processed_counts(), separate = input[["sep_exp"]], model = "all", level = input[["conf_level"]])
   })
   
-  compared_fits_sep <- reactive({
+  compared_fits <- reactive({
     compare_fit(processed_counts(), fits())
   })
   
@@ -102,21 +102,29 @@ shinyServer(function(input, output) {
   
   # compare distrs ----------------------------
   output[["cmp_plot"]] <- renderPlot({
-    plot_fitcmp(compared_fits_sep())
+    plot_fitcmp(compared_fits())
   })
   
   output[["cmp_plot_db"]] <- downloadHandler("cmp.svg",
                                              content = function(file) {
-                                               ggsave(file, plot_fitcmp(compared_fits_sep()),
+                                               ggsave(file, plot_fitcmp(compared_fits()),
                                                       device = svg, 
                                                       height = 297, width = 297,
                                                       units = "mm")
                                              })
   
   output[["cmp_sep_tab"]] <- DT::renderDataTable({
-    my_DT(compared_fits_sep())
+    my_DT(compared_fits())
   })
   
-  
+  output[["report_download_button"]] <- downloadHandler(
+    filename  = "counteReport.html",
+    content = function(file) {
+      knitr::knit(input = "counteReport.Rmd", 
+                  output = "counteReport.md", quiet = TRUE)
+      on.exit(unlink(c("counteReport.md", "figure"), recursive = TRUE))
+      markdown::markdownToHTML("counteReport.md", file, stylesheet = "report.css", 
+                               options = c('toc', markdown::markdownHTMLOptions(TRUE)))
+    })
   
 })
