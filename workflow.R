@@ -11,7 +11,7 @@ summary_counts(healthy_list)[["mean"]]
 healthy_list_fitc
 
 
-all_fits_separate <- fit_counts(healthy_list[1L:6], separate = TRUE, model = "all")
+all_fits_separate <- fit_counts(healthy_list[1L:6], separate = TRUE, model = "all", level = 1)
 all_fits_whole <- fit_counts(healthy_list[1L:6], separate = FALSE, model = "all")
 
 max_len <- max(lengths(healthy_list[1L:6]))

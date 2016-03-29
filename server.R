@@ -1,12 +1,12 @@
 library(shiny)
 # must use development DT
-# devtools::install_github('rstudio/DT')
+# devtools::install_github("rstudio/DT")
 library(DT)
 library(reshape2)
 
 source("load_all.R")
 
-options(DT.options = list(dom = "Bfrtip",
+options(DT.options = list(dom = "Brtip",
                           buttons = c("copy", "csv", "excel", "print")
 ))
 
@@ -43,21 +43,14 @@ shinyServer(function(input, output) {
     get_occs(processed_counts())
   })
   
-  fits_separate <- reactive({
-    fit_counts(processed_counts(), separate = TRUE, model = "all")
-  })
-  
-  fits_whole <- reactive({
-    fit_counts(processed_counts(), separate = FALSE, model = "all")
+  fits <- reactive({
+    fit_counts(processed_counts(), separate = input[["sep_exp"]], model = "all", level = input[["conf_level"]])
   })
   
   compared_fits_sep <- reactive({
-    compare_fit(processed_counts(), fits_separate())
+    compare_fit(processed_counts(), fits())
   })
   
-  compared_fits_whole <- reactive({
-    compare_fit(processed_counts(), fits_whole())
-  })
   
   output[["input_data"]] <- DT::renderDataTable({
     my_DT(raw_counts())
@@ -88,73 +81,42 @@ shinyServer(function(input, output) {
                                                                    height = 260 + 70 * length(processed_counts()), width = 297,
                                                                    units = "mm")
                                                           })
-  # separate fits, mean values ----------------------------
-  output[["fit_sep_plot"]] <- renderPlot({
-    plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]])
+  # mean values ----------------------------
+  output[["fit_plot"]] <- renderPlot({
+    plot_fitlist(fits(), input[["models_fit_plot"]])
   })
   
-  output[["fit_sep_plot_db"]] <- downloadHandler("fit_sep_CI.svg",
+  output[["fit_plot_db"]] <- downloadHandler("fit_CI.svg",
                                                  content = function(file) {
-                                                   ggsave(file, plot_fitlist(fits_separate(), input[["models_fit_sep_plot"]]),
+                                                   ggsave(file, plot_fitlist(fits(), input[["models_fit_plot"]]),
                                                           device = svg, 
                                                           height = 297, width = 297,
                                                           units = "mm")
                                                  })
   
-  output[["fit_sep_tab"]] <- DT::renderDataTable({
-    my_DT(summary_fitlist(fits_separate())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
+  output[["fit_tab"]] <- DT::renderDataTable({
+    #my_DT(summary_fitlist(fits()))
+    dat <- summary_fitlist(fits())[, c("count", "lambda", "lower", "upper", "BIC", "model")]
+    my_DT(dat)
   })
   
-  # whole fits, mean values ----------------------------
-  output[["fit_whole_plot"]] <- renderPlot({
-    plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]])
-  })
-  
-  output[["fit_whole_plot_db"]] <- downloadHandler("fit_whole_CI.svg",
-                                                   content = function(file) {
-                                                     ggsave(file, plot_fitlist(fits_whole(), input[["models_fit_whole_plot"]]),
-                                                            device = svg, 
-                                                            height = 297, width = 297,
-                                                            units = "mm")
-                                                   })
-  
-  output[["fit_whole_tab"]] <- DT::renderDataTable({
-    my_DT(summary_fitlist(fits_whole())[, c("count", "lambda", "lower", "upper", "BIC", "model")])
-  })
-  
-  
-  # separate fits, compare distrs ----------------------------
-  output[["cmp_sep_plot"]] <- renderPlot({
+  # compare distrs ----------------------------
+  output[["cmp_plot"]] <- renderPlot({
     plot_fitcmp(compared_fits_sep())
   })
   
-  output[["cmp_sep_plot_db"]] <- downloadHandler("cmp_sep.svg",
-                                                 content = function(file) {
-                                                   ggsave(file, plot_fitcmp(compared_fits_sep()),
-                                                          device = svg, 
-                                                          height = 297, width = 297,
-                                                          units = "mm")
-                                                 })
+  output[["cmp_plot_db"]] <- downloadHandler("cmp.svg",
+                                             content = function(file) {
+                                               ggsave(file, plot_fitcmp(compared_fits_sep()),
+                                                      device = svg, 
+                                                      height = 297, width = 297,
+                                                      units = "mm")
+                                             })
   
   output[["cmp_sep_tab"]] <- DT::renderDataTable({
     my_DT(compared_fits_sep())
   })
   
-  # whole fits, compare distrs ----------------------------
-  output[["cmp_whole_plot"]] <- renderPlot({
-    plot_fitcmp(compared_fits_whole())
-  })
   
-  output[["cmp_whole_plot_db"]] <- downloadHandler("cmp_whole.svg",
-                                                   content = function(file) {
-                                                     ggsave(file, plot_fitcmp(compared_fits_sep()),
-                                                            device = svg, 
-                                                            height = 297, width = 297,
-                                                            units = "mm")
-                                                   })
-  
-  output[["cmp_whole_tab"]] <- DT::renderDataTable({
-    my_DT(compared_fits_whole())
-  })
   
 })
