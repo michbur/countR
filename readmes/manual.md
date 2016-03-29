@@ -12,7 +12,15 @@ Each chart is downloadable in the .svg format. A download button is always locat
 
 ## Data upload
 
-The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by C.  
+The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by 'C'.  
+
+## Settings
+
+**Separate experiments**: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually. Otherwise, the counts are fitted together to a single distribution following the model:
+
+$$Y = \beta C $$
+
+where Y are counts and C is a vector of counts names, a categorical variable. $\beta$ is a vector of coefficients and $exp(\beta) = \lambda$. Notice that the model does not have the intercept.  
 
 ## Count data
 
