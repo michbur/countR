@@ -53,4 +53,4 @@ max_len <- max(lengths(healthy_list[patient_id == 72]))
 write.csv(do.call(cbind, lapply(healthy_list[patient_id == 72], function(i)
   c(i, rep(NA, max_len - length(i))))), file = "six_replicates_bad.csv", row.names = FALSE)
 
-compare_fit(healthy_list_fitc[patient_id == 72], fit_counts(healthy_list[patient_id == 72], separate = FALSE, model = "all"))
+compare_fit(healthy_list_fitc[patient_id == 72], fit_counts(healthy_list[patient_id == 72], separate = TRUE, model = "all"))
