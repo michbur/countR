@@ -26,6 +26,13 @@ Report generated on `r Sys.time()`.
 
 Detected input file: `r ifelse(is.null(input[["input_file"]][["name"]]), "none", input[["input_file"]][["name"]])`.  
 
+## Settings
+
+Confidence level: `r input[["conf_level"]]`.  
+
+Type of analysis: `r ifelse(input[["conf_level"]], "separate experiments", "technical replicates")`.
+
+
 ```{r}
 if(input[["mean_value_rep"]]) {
   cat("\n",readLines("./readmes/mean_value/1.md"), sep = "    \n")
