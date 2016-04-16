@@ -16,10 +16,6 @@ Each chart may be saved in the .svg format. A download button is always located 
 
 The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the "Header" checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by 'C'.  
 
-## Settings
-
-**Separate experiments**: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates. 
-
 ## Count data
 
 This panel contains descriptive statistics and summaries of the input data. It consists of three subpanels:  
@@ -27,9 +23,13 @@ This panel contains descriptive statistics and summaries of the input data. It c
 2. *Summary*: Summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).  
 3. *Distribution*: A bar chart of the counts distribution followed by a pivot table.  
 
-## Mean value estimators
+## Mean value estimates
 
-Estimators of the mean number of all models.
+Estimates of the mean number ($\lambda$) for all models.
+
+## Settings
+
+**Separate experiments**: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates. 
 
 
 # Overdispersion

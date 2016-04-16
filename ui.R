@@ -1,10 +1,12 @@
 library(shiny)
 library(shinythemes)
+library(rhandsontable)
+
 
 shinyUI(navbarPage(title = "countR",
                    theme = shinytheme("cerulean"),
                    id = "navbar", windowTitle = "countR", collapsible=TRUE,
-                   tabPanel("Data upload and settings",
+                   tabPanel("Data upload",
                             includeMarkdown("./readmes/data_upload/1.md"),
                             fluidRow(column(3, fileInput("input_file", "Choose CSV File with count data:",
                                                          accept=c("text/csv", "text/comma-separated-values,text/plain", ".csv"))),
@@ -13,12 +15,8 @@ shinyUI(navbarPage(title = "countR",
                                                             c("Dec: dot (.), Sep: comma (;)" = "csv1",
                                                               "Dec: comma (,), Sep: semicolon (;)" = "csv2")))
                             ),
-                            includeMarkdown("./readmes/data_upload/2.md"),
-                            fluidRow(column(3, checkboxInput("sep_exp", "Separate experiments:", TRUE)),
-                                     column(2, numericInput("conf_level", "Confidence level:", 0.95,
-                                                            min = 0, max = 1, step = 0.01))
-                            )
-                   ), 
+                            includeMarkdown("./readmes/data_upload/2.md")
+                   ),
                    navbarMenu("Count data",
                               tabPanel("Count table",
                                        includeMarkdown("./readmes/count_data/1.md"),
@@ -38,25 +36,25 @@ shinyUI(navbarPage(title = "countR",
                               )
                    ),
                    tabPanel("Mean value estimates",
-                              includeMarkdown("./readmes/mean_value/1.md"),
-                              fluidRow(column(3, downloadButton("fit_plot_db", "Save chart (.svg)")),
-                                       column(3, checkboxGroupInput("models_fit_plot", "Models to plot", 
-                                                                    choices = c("Poisson" = "pois",
-                                                                                "NB" = "nb",
-                                                                                "ZIP" = "zip",
-                                                                                "ZINB" = "zinb"), 
-                                                                    selected = c("pois", "nb", "zip", "zinb")
-                                       ))
-                              ),
-                              plotOutput("fit_plot"),
-                              includeMarkdown("./readmes/mean_value/2.md"),
-                              DT::dataTableOutput("fit_tab")
+                            includeMarkdown("./readmes/mean_value/1.md"),
+                            fluidRow(column(3, downloadButton("fit_plot_db", "Save chart (.svg)")),
+                                     column(3, checkboxGroupInput("models_fit_plot", "Models to plot", 
+                                                                  choices = c("Poisson" = "pois",
+                                                                              "NB" = "nb",
+                                                                              "ZIP" = "zip",
+                                                                              "ZINB" = "zinb"), 
+                                                                  selected = c("pois", "nb", "zip", "zinb")
+                                     ))
+                            ),
+                            plotOutput("fit_plot"),
+                            includeMarkdown("./readmes/mean_value/2.md"),
+                            DT::dataTableOutput("fit_tab")
                    ),
                    tabPanel("Compare distributions",
-                              includeMarkdown("./readmes/cmp_distr/1.md"),
-                              fluidRow(column(3, downloadButton("cmp_plot_db", "Save chart (.svg)"))),
-                              plotOutput("cmp_plot"),
-                              DT::dataTableOutput("cmp_sep_tab")
+                            includeMarkdown("./readmes/cmp_distr/1.md"),
+                            fluidRow(column(3, downloadButton("cmp_plot_db", "Save chart (.svg)"))),
+                            plotOutput("cmp_plot"),
+                            DT::dataTableOutput("cmp_sep_tab")
                    ),
                    tabPanel("Save report",
                             checkboxInput("mean_value_rep", "Mean value estimates", 
@@ -66,10 +64,20 @@ shinyUI(navbarPage(title = "countR",
                             p("Be patient. The generation of the report may take few minutes."),
                             downloadButton("report_download_button", 
                                            "Save report")),
-                   navbarMenu("Help",
-                              tabPanel("About",
-                                       includeMarkdown("./readmes/about.md")),
-                              tabPanel("Help",
-                                       includeHTML("./readmes/manual.html"))
-                   )
+                   navbarMenu("Settings",
+                              tabPanel("Settings",
+                                       includeMarkdown("./readmes/settings/1.md"),
+                                       fluidRow(column(3, checkboxInput("sep_exp", "Separate experiments:", TRUE)),
+                                                column(2, numericInput("conf_level", "Confidence level:", 0.95,
+                                                                       min = 0, max = 1, step = 0.01))
+                                       )),
+                              tabPanel("Edit data", 
+                                       rHandsontableOutput("hot_counts")
+                              )
+                   ),
+                   tabPanel("About",
+                            includeMarkdown("./readmes/about.md")),
+                   tabPanel("Help",
+                            includeHTML("./readmes/manual.html"))
+                   
 ))

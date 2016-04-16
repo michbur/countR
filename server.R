@@ -3,6 +3,7 @@ library(shiny)
 # devtools::install_github("rstudio/DT")
 library(DT)
 library(reshape2)
+library(rhandsontable)
 
 source("load_all.R")
 
@@ -32,7 +33,14 @@ shinyServer(function(input, output) {
       
     }
     
+    if(!is.null(input[["hot_counts"]]))
+      dat <- hot_to_r(input[["hot_counts"]])
+    
     dat
+  })
+  
+  output[["hot_counts"]] = renderRHandsontable({
+    rhandsontable(raw_counts(), readOnly = FALSE, selectCallback = TRUE, highlightRow = TRUE)
   })
   
   processed_counts <- reactive({
