@@ -35,16 +35,17 @@ The estimates of the mean number ($\lambda$) for all models.
 
 ## Compare distributions
 
-The bar charts represent theoretical counts depending on the chosen distribution. Red dots describe the real number of counts. The visualized data is also accessible in the tabular format.
+The bar charts represent theoretical counts depending on the chosen distribution. Red dots describe the real number of counts. The visualized data is also available in the tabular format.
 
 ## Settings
 
 **Separate experiments**: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates. 
 
+**Confidence level**: the confidence level of confidence intervals. 
 
 # Overdispersion
 
-One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data should be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
+One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data is commonly assumed to be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in countR: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
 
 Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
 
