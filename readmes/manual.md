@@ -10,7 +10,13 @@ output:
 
 # Usage of countR
 
-Each chart may be saved in the .svg format. A download button is always located at the top of a chart. Tables may be also downloaded using the buttons at the top of the table.
+## General tips
+
+### Charts
+Each chart may be saved in the .svg format. A download button is always located at the top of a chart. 
+
+### Tables
+Tables may be downloaded in a specified format or printed using the buttons at the top of the table.
 
 ## Data upload
 
@@ -25,7 +31,11 @@ This panel contains descriptive statistics and summaries of the input data. It c
 
 ## Mean value estimates
 
-Estimates of the mean number ($\lambda$) for all models.
+The estimates of the mean number ($\lambda$) for all models.
+
+## Compare distributions
+
+The bar charts represent theoretical counts depending on the chosen distribution. Red dots describe the real number of counts. The visualized data is also accessible in the tabular format.
 
 ## Settings
 

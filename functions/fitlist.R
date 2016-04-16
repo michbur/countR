@@ -29,7 +29,7 @@ plot_fitlist <- function(fitlist, model_names = c("pois", "nb", "zip", "zinb")) 
   ggplot(droplevels(plot_dat[plot_dat[["model"]] %in% model_names, ]), 
          aes(x = nice_model, y = lambda, ymax = upper, ymin = lower, color = lowest_BIC)) +
     geom_point() +
-    geom_errorbar() +
+    geom_errorbar(width = 0.5) +
     facet_wrap(~ count) +
     scale_x_discrete("Model") +
     scale_y_continuous(expression(lambda)) + 

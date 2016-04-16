@@ -65,7 +65,8 @@ shinyServer(function(input, output) {
   })
   
   output[["input_data_summary"]] <- DT::renderDataTable({
-    my_DT(summary_counts(processed_counts()))
+    summ <- summary_counts(processed_counts())
+    formatRound(my_DT(summ), c(2, 4, 5), digits = 4)
   })
   
   output[["input_data_distr_tab"]] <- DT::renderDataTable({
@@ -105,7 +106,7 @@ shinyServer(function(input, output) {
   output[["fit_tab"]] <- DT::renderDataTable({
     #my_DT(summary_fitlist(fits()))
     dat <- summary_fitlist(fits())[, c("count", "lambda", "lower", "upper", "BIC", "model")]
-    my_DT(dat)
+    formatRound(my_DT(dat), 2L:5, digits = 4)
   })
   
   # compare distrs ----------------------------
@@ -122,7 +123,8 @@ shinyServer(function(input, output) {
                                              })
   
   output[["cmp_sep_tab"]] <- DT::renderDataTable({
-    my_DT(compared_fits())
+    comp <- compared_fits()
+    formatRound(my_DT(comp), c(2, 4, 5), digits = 4)
   })
   
   output[["report_download_button"]] <- downloadHandler(

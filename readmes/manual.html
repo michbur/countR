@@ -115,9 +115,14 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#usage-of-countr">Usage of countR</a><ul>
+<li><a href="#general-tips">General tips</a><ul>
+<li><a href="#charts">Charts</a></li>
+<li><a href="#tables">Tables</a></li>
+</ul></li>
 <li><a href="#data-upload">Data upload</a></li>
 <li><a href="#count-data">Count data</a></li>
 <li><a href="#mean-value-estimates">Mean value estimates</a></li>
+<li><a href="#compare-distributions">Compare distributions</a></li>
 <li><a href="#settings">Settings</a></li>
 </ul></li>
 <li><a href="#overdispersion">Overdispersion</a><ul>
@@ -128,7 +133,17 @@ $(document).ready(function () {
 
 <div id="usage-of-countr" class="section level1">
 <h1>Usage of countR</h1>
-<p>Each chart may be saved in the .svg format. A download button is always located at the top of a chart. Tables may be also downloaded using the buttons at the top of the table.</p>
+<div id="general-tips" class="section level2">
+<h2>General tips</h2>
+<div id="charts" class="section level3">
+<h3>Charts</h3>
+<p>Each chart may be saved in the .svg format. A download button is always located at the top of a chart.</p>
+</div>
+<div id="tables" class="section level3">
+<h3>Tables</h3>
+<p>Tables may be downloaded in a specified format or printed using the buttons at the top of the table.</p>
+</div>
+</div>
 <div id="data-upload" class="section level2">
 <h2>Data upload</h2>
 <p>The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the “Header” checkbox. In this case, countR will automatically name your counts with the index number of a count prefixed by ‘C’.</p>
@@ -142,7 +157,11 @@ $(document).ready(function () {
 </div>
 <div id="mean-value-estimates" class="section level2">
 <h2>Mean value estimates</h2>
-<p>Estimates of the mean number (<span class="math inline">\(\lambda\)</span>) for all models.</p>
+<p>The estimates of the mean number (<span class="math inline">\(\lambda\)</span>) for all models.</p>
+</div>
+<div id="compare-distributions" class="section level2">
+<h2>Compare distributions</h2>
+<p>The bar charts represent theoretical counts depending on the chosen distribution. Red dots describe the real number of counts. The visualized data is also accessible in the tabular format.</p>
 </div>
 <div id="settings" class="section level2">
 <h2>Settings</h2>
