@@ -59,6 +59,10 @@ shinyServer(function(input, output) {
     compare_fit(processed_counts(), fits())
   })
   
+  summarized_fits <- reactive({
+    summary_fitlist(fits())
+  })
+  
   
   output[["input_data"]] <- DT::renderDataTable({
     my_DT(raw_counts())
@@ -105,8 +109,14 @@ shinyServer(function(input, output) {
   
   output[["fit_tab"]] <- DT::renderDataTable({
     #my_DT(summary_fitlist(fits()))
-    dat <- summary_fitlist(fits())[, c("count", "lambda", "lower", "upper", "BIC", "model")]
+    dat <- summarized_fits()[, c("count", "lambda", "lower", "upper", "BIC", "model")]
     formatRound(my_DT(dat), 2L:5, digits = 4)
+  })
+  
+  output[["coef_tab"]] <- DT::renderDataTable({
+    #my_DT(summary_fitlist(fits()))
+    dat <- summarized_fits()[, c("count", "lambda", "theta", "r", "model")]
+    formatRound(my_DT(dat), 2L:4, digits = 4)
   })
   
   # compare distrs ----------------------------

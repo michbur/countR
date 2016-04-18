@@ -1,23 +1,9 @@
 input <- read.csv("example_counts.csv")
-input[3L:4, 3] <- NA
-
-input[240L:250, 1L:3] <- NA
-
-tmp <- process_counts(input)
-
-load("repeat_list.RData")
-load("healthy_list.RData")
-summary_counts(healthy_list)[["mean"]]
-healthy_list_fitc
 
 
-all_fits_separate <- fit_counts(healthy_list[1L:6], separate = TRUE, model = "all", level = 1)
-all_fits_whole <- fit_counts(healthy_list[1L:6], separate = FALSE, model = "all")
+all_fits_separate <- fit_counts(input, separate = TRUE, model = "all")
+all_fits_whole <- fit_counts(input, separate = FALSE, model = "all")
 
-max_len <- max(lengths(healthy_list[1L:6]))
-
-write.csv(do.call(cbind, lapply(healthy_list[1L:6], function(i)
-  c(i, rep(NA, max_len - length(i))))), file = "six_replicates.csv", row.names = FALSE)
 
 library(ggplot2)
 

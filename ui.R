@@ -43,7 +43,10 @@ shinyUI(navbarPage(title = "countfitter",
                                        plotOutput("fit_plot"),
                                        includeMarkdown("./readmes/mean_value/2.md"),
                                        DT::dataTableOutput("fit_tab")
-                              )),
+                              ),
+                              tabPanel("Coefficients",
+                                       DT::dataTableOutput("coef_tab"))
+                   ),
                    tabPanel("Compare distributions",
                             includeMarkdown("./readmes/cmp_distr/1.md"),
                             fluidRow(column(3, downloadButton("cmp_plot_db", "Save chart (.svg)"))),
