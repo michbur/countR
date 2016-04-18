@@ -3,9 +3,9 @@ library(shinythemes)
 library(rhandsontable)
 
 
-shinyUI(navbarPage(title = "countR",
+shinyUI(navbarPage(title = "countr",
                    theme = shinytheme("cerulean"),
-                   id = "navbar", windowTitle = "countR", collapsible=TRUE,
+                   id = "navbar", windowTitle = "countr", collapsible=TRUE,
                    tabPanel("Data upload",
                             includeMarkdown("./readmes/data_upload/1.md"),
                             fluidRow(column(3, fileInput("input_file", "Choose CSV File with count data:",

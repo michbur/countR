@@ -1,5 +1,5 @@
 ---
-title: "countReport"
+title: "countreport"
 author: "Michal Burdukiewicz, Stefan Roediger"
 date: ""
 output:
@@ -8,7 +8,7 @@ css: report.css
 toc: true
 ---
 
-# countR
+# countr
 
 ```{r echo=FALSE, results='asis'}
 library(knitr)
