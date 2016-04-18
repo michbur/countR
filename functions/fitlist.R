@@ -35,3 +35,15 @@ plot_fitlist <- function(fitlist) {
     scale_color_discrete("The lowest BIC") +
     my_theme
 }
+
+decide <- function(summary_fit, separate) {
+  BICs <- summary_fit[["BIC"]]
+  model_names <- summary_fit[["model"]]
+  if (separate) {
+    "bla"
+  } else {
+    paste0("The most appropriate model (model with the lowest BIC value): ", 
+         as.character(summary_fit[["model"]][which.min(summary_fit[["BIC"]])]), 
+         ". The difference of")
+  }
+}

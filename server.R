@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
     
     if(!is.null(input[["hot_counts"]]))
       dat <- hot_to_r(input[["hot_counts"]])
-
+    
     dat
   })
   
@@ -99,13 +99,22 @@ shinyServer(function(input, output) {
     plot_fitlist(fits())
   })
   
+  output[["model_decision"]] <- renderUI({
+    if(input[["sep_exp"]]) {
+      HTML("blabla")
+    } else {
+      HTML("The most appropriate model (model with the lowest BIC value):", 
+           paste0(as.character(summarized_fits()[["model"]][which.min(summarized_fits()[["BIC"]])]), ".")) 
+    }
+  })
+  
   output[["fit_plot_db"]] <- downloadHandler("fit_CI.svg",
-                                                 content = function(file) {
-                                                   ggsave(file, plot_fitlist(fits()),
-                                                          device = svg, 
-                                                          height = 297, width = 297,
-                                                          units = "mm")
-                                                 })
+                                             content = function(file) {
+                                               ggsave(file, plot_fitlist(fits()),
+                                                      device = svg, 
+                                                      height = 297, width = 297,
+                                                      units = "mm")
+                                             })
   
   output[["fit_tab"]] <- DT::renderDataTable({
     #my_DT(summary_fitlist(fits()))
