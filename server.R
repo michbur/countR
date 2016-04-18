@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
   })
   
   fits <- reactive({
-    fit_counts(processed_counts(), separate = input[["sep_exp"]], model = "all", level = input[["conf_level"]])
+    fit_counts(processed_counts(), separate = input[["sep_exp"]], model = input[["chosen_models"]], level = input[["conf_level"]])
   })
   
   compared_fits <- reactive({
@@ -92,12 +92,12 @@ shinyServer(function(input, output) {
                                                           })
   # mean values ----------------------------
   output[["fit_plot"]] <- renderPlot({
-    plot_fitlist(fits(), input[["models_fit_plot"]])
+    plot_fitlist(fits())
   })
   
   output[["fit_plot_db"]] <- downloadHandler("fit_CI.svg",
                                                  content = function(file) {
-                                                   ggsave(file, plot_fitlist(fits(), input[["models_fit_plot"]]),
+                                                   ggsave(file, plot_fitlist(fits()),
                                                           device = svg, 
                                                           height = 297, width = 297,
                                                           units = "mm")

@@ -11,7 +11,10 @@
 #' lower and upper confidence intervals.
 fit_counts <- function(counts_list, separate = TRUE, model, level = 0.95, ...) {
   # add proper name checker
-  nice_model <- model
+  checked_model <- model
+  
+  if(length(checked_model) == 1 && checked_model == "all")
+    checked_model <- c("pois", "zip", "nb", "zinb")
   
   if(separate) {
     fit_data <- counts_list
@@ -21,16 +24,16 @@ fit_counts <- function(counts_list, separate = TRUE, model, level = 0.95, ...) {
       data.frame(count_name = single_name, value = counts_list[[single_name]]))) 
     fit_function <- fit_counts_whole
   }
-  if(nice_model == "all") {
-    all_fits <- unlist(lapply(c("pois", "zip", "nb", "zinb"), function(single_model)
-      fit_function(fit_data, model = single_model, level = level, ...)
+  if(length(checked_model) > 1) {
+    all_fits <- unlist(lapply(checked_model, function(single_model)
+      fit_function(fit_data, model = single_model, level = level)
     ), recursive = FALSE)
     
-    names(all_fits) <- as.vector(vapply(c("pois", "zip", "nb", "zinb"), function(single_name) 
+    names(all_fits) <- as.vector(vapply(checked_model, function(single_name) 
       paste0(names(counts_list), "_", single_name), rep("a", length(counts_list))))
   } else {
-    all_fits <- fit_function(fit_data, model = nice_model, level = level, ...)
-    names(all_fits) <- paste0(names(counts_list), nice_model)
+    all_fits <- fit_function(fit_data, model = checked_model, level = level, ...)
+    names(all_fits) <- paste0(names(counts_list), checked_model)
   }
   
   all_fits

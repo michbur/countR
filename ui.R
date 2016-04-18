@@ -18,6 +18,10 @@ shinyUI(navbarPage(title = "countR",
                             includeMarkdown("./readmes/data_upload/2.md")
                    ),
                    navbarMenu("Count data",
+                              tabPanel("Edit input data", 
+                                       includeMarkdown("./readmes/count_data/1.md"),
+                                       rHandsontableOutput("hot_counts")
+                              ),
                               tabPanel("Summary",
                                        includeMarkdown("./readmes/count_data/2.md"),
                                        DT::dataTableOutput("input_data_summary")
@@ -33,14 +37,7 @@ shinyUI(navbarPage(title = "countR",
                    ),
                    tabPanel("Mean value estimates",
                             includeMarkdown("./readmes/mean_value/1.md"),
-                            fluidRow(column(3, downloadButton("fit_plot_db", "Save chart (.svg)")),
-                                     column(3, checkboxGroupInput("models_fit_plot", "Models to plot", 
-                                                                  choices = c("Poisson" = "pois",
-                                                                              "NB" = "nb",
-                                                                              "ZIP" = "zip",
-                                                                              "ZINB" = "zinb"), 
-                                                                  selected = c("pois", "nb", "zip", "zinb")
-                                     ))
+                            fluidRow(column(3, downloadButton("fit_plot_db", "Save chart (.svg)"))
                             ),
                             plotOutput("fit_plot"),
                             includeMarkdown("./readmes/mean_value/2.md"),
@@ -60,18 +57,19 @@ shinyUI(navbarPage(title = "countR",
                             p("Be patient. The generation of the report may take few minutes."),
                             downloadButton("report_download_button", 
                                            "Save report")),
-                   navbarMenu("Settings",
-                              tabPanel("Settings",
-                                       includeMarkdown("./readmes/settings/1.md"),
-                                       fluidRow(column(3, checkboxInput("sep_exp", "Separate experiments:", TRUE)),
-                                                column(2, numericInput("conf_level", "Confidence level:", 0.95,
-                                                                       min = 0, max = 1, step = 0.01))
-                                       )),
-                              tabPanel("Edit data", 
-                                       includeMarkdown("./readmes/count_data/1.md"),
-                                       rHandsontableOutput("hot_counts")
-                              )
-                   ),
+                   tabPanel("Settings",
+                            includeMarkdown("./readmes/settings/1.md"),
+                            fluidRow(column(3, checkboxInput("sep_exp", "Separate experiments:", TRUE)),
+                                     column(2, numericInput("conf_level", "Confidence level:", 0.95,
+                                                            min = 0, max = 1, step = 0.01))
+                            ),
+                            fluidRow(column(3, checkboxGroupInput("chosen_models", "Count distributions", 
+                                                                  choices = c("Poisson" = "pois",
+                                                                              "NB" = "nb",
+                                                                              "ZIP" = "zip",
+                                                                              "ZINB" = "zinb"), 
+                                                                  selected = c("pois", "nb", "zip", "zinb")
+                            )))),
                    tabPanel("About",
                             includeMarkdown("./readmes/about.md")),
                    tabPanel("Help",

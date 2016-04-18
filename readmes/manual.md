@@ -31,7 +31,7 @@ This panel contains descriptive statistics and summaries of the input data. It c
 
 ## Mean value estimates
 
-The estimates of the mean number ($\lambda$) for all models.
+The estimated value of mean ($\lambda$) and its confidence intervals.
 
 ## Compare distributions
 
@@ -42,6 +42,8 @@ The bar charts represent theoretical counts depending on the chosen distribution
 **Separate experiments**: if this checkbox is marked, the countR assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates. 
 
 **Confidence level**: the confidence level of confidence intervals. 
+
+**Count distributions**: count distributions fitted to data: Poisson, Negative Binomial, Zero-Inflated Poisson, Zero-Inflated Negative Binomial. Possible distributions are described further in the manual.
 
 # Overdispersion
 
