@@ -45,6 +45,7 @@ shinyUI(navbarPage(title = "countfitter",
                                        DT::dataTableOutput("fit_tab")
                               ),
                               tabPanel("Coefficients",
+                                       includeMarkdown("./readmes/mean_value/3.md"),
                                        DT::dataTableOutput("coef_tab"))
                    ),
                    tabPanel("Compare distributions",

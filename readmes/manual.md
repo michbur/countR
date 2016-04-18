@@ -31,7 +31,8 @@ This panel contains descriptive statistics and summaries of the input data. It c
 
 ## Fitted models
 
-1. *Mean value estimates*: the estimated value of mean ($\lambda$) and its confidence intervals.  
+1. *Mean value estimates*: the estimated value of mean ($\lambda$) and its confidence intervals. The BIC indicates the most appropriate distribution.    
+2. *Coefficients*: coefficients of fitted models. 
 
 ## Compare distributions
 
