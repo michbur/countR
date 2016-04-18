@@ -1,6 +1,6 @@
 ## About  
 
-The source code of countr is avaible on [GitHub](https://github.com/michbur/countr).
+The source code of countfitter is avaible on [GitHub](https://github.com/michbur/countfitter).
 
 ### Authors
 

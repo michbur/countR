@@ -3,9 +3,9 @@ library(shinythemes)
 library(rhandsontable)
 
 
-shinyUI(navbarPage(title = "countr",
+shinyUI(navbarPage(title = "countfitter",
                    theme = shinytheme("cerulean"),
-                   id = "navbar", windowTitle = "countr", collapsible=TRUE,
+                   id = "navbar", windowTitle = "countfitter", collapsible=TRUE,
                    tabPanel("Data upload",
                             includeMarkdown("./readmes/data_upload/1.md"),
                             fluidRow(column(3, fileInput("input_file", "Choose CSV File with count data:",
@@ -35,14 +35,15 @@ shinyUI(navbarPage(title = "countr",
                                        DT::dataTableOutput("input_data_distr_tab")
                               )
                    ),
-                   tabPanel("Mean value estimates",
-                            includeMarkdown("./readmes/mean_value/1.md"),
-                            fluidRow(column(3, downloadButton("fit_plot_db", "Save chart (.svg)"))
-                            ),
-                            plotOutput("fit_plot"),
-                            includeMarkdown("./readmes/mean_value/2.md"),
-                            DT::dataTableOutput("fit_tab")
-                   ),
+                   navbarMenu("Fitted models",
+                              tabPanel(HTML("Mean value (&lambda;) estimates"),
+                                       includeMarkdown("./readmes/mean_value/1.md"),
+                                       fluidRow(column(3, downloadButton("fit_plot_db", "Save chart (.svg)"))
+                                       ),
+                                       plotOutput("fit_plot"),
+                                       includeMarkdown("./readmes/mean_value/2.md"),
+                                       DT::dataTableOutput("fit_tab")
+                              )),
                    tabPanel("Compare distributions",
                             includeMarkdown("./readmes/cmp_distr/1.md"),
                             fluidRow(column(3, downloadButton("cmp_plot_db", "Save chart (.svg)"))),

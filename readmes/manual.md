@@ -8,7 +8,7 @@ output:
     toc: yes
 ---
 
-# Usage of countr
+# **countfitter**
 
 ## General tips
 
@@ -20,18 +20,18 @@ Tables may be downloaded in a specified format or printed using the buttons at t
 
 ## Data upload
 
-The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the "Header" checkbox. In this case, countr will automatically name your counts with the index number of a count prefixed by 'C'.  
+The data format suitable for upload is the .csv document, where a single column corresponds to a single count. Use raw counts instead a pivot table. If your document does not have headers, specify it using the "Header" checkbox. In this case, **countfitter** will automatically name your counts with the index number of a count prefixed by 'C'.  
 
 ## Count data
 
 This panel contains descriptive statistics and summaries of the input data. It consists of three subpanels:  
-1. *Count table*: Input data in the tabular format allowing sanity checks of the proper upload.  
-2. *Summary*: Summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).  
-3. *Distribution*: A bar chart of the counts distribution followed by a pivot table.  
+1. *Count table*: the input dataset in the tabular format allowing sanity checks and manual modification.
+2. *Summary*: summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).  
+3. *Distribution*: a bar chart of the counts distribution followed by a pivot table.  
 
-## Mean value estimates
+## Fitted models
 
-The estimated value of mean ($\lambda$) and its confidence intervals.
+1. *Mean value estimates*: the estimated value of mean ($\lambda$) and its confidence intervals.  
 
 ## Compare distributions
 
@@ -39,15 +39,15 @@ The bar charts represent theoretical counts depending on the chosen distribution
 
 ## Settings
 
-**Separate experiments**: if this checkbox is marked, the countr assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates. 
+**Separate experiments**: if this checkbox is marked, the **countfitter** assumes that experiments are separate and fits the distribution to each individually and independently. Otherwise, all counts are simultaneously fitted to a single model. It is more appropriate for situations, where there is assumption that all samples may be describe by the same distribution, for example in case of technical replicates.  
 
-**Confidence level**: the confidence level of confidence intervals. 
+**Confidence level**: the confidence level of confidence intervals.  
 
-**Count distributions**: count distributions fitted to data: Poisson, Negative Binomial, Zero-Inflated Poisson, Zero-Inflated Negative Binomial. Possible distributions are described further in the manual.
+**Count distributions**: count distributions fitted to data: Poisson, Negative Binomial, Zero-Inflated Poisson, Zero-Inflated Negative Binomial. Possible distributions are described further in the manual.  
 
 # Overdispersion
 
-One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data is commonly assumed to be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in countr: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
+One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data is commonly assumed to be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in **countfitter**: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
 
 Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
 
