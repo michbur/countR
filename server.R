@@ -35,12 +35,12 @@ shinyServer(function(input, output) {
     
     if(!is.null(input[["hot_counts"]]))
       dat <- hot_to_r(input[["hot_counts"]])
-    
+
     dat
   })
   
   output[["hot_counts"]] = renderRHandsontable({
-    rhandsontable(raw_counts(), readOnly = FALSE, selectCallback = TRUE, highlightRow = TRUE)
+    rhandsontable(raw_counts(), readOnly = FALSE, selectCallback = TRUE)
   })
   
   processed_counts <- reactive({

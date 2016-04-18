@@ -18,10 +18,6 @@ shinyUI(navbarPage(title = "countR",
                             includeMarkdown("./readmes/data_upload/2.md")
                    ),
                    navbarMenu("Count data",
-                              tabPanel("Count table",
-                                       includeMarkdown("./readmes/count_data/1.md"),
-                                       DT::dataTableOutput("input_data")
-                              ),
                               tabPanel("Summary",
                                        includeMarkdown("./readmes/count_data/2.md"),
                                        DT::dataTableOutput("input_data_summary")
@@ -72,6 +68,7 @@ shinyUI(navbarPage(title = "countR",
                                                                        min = 0, max = 1, step = 0.01))
                                        )),
                               tabPanel("Edit data", 
+                                       includeMarkdown("./readmes/count_data/1.md"),
                                        rHandsontableOutput("hot_counts")
                               )
                    ),
