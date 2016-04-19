@@ -100,7 +100,7 @@ shinyServer(function(input, output) {
   })
   
   output[["model_decision"]] <- renderUI({
-    decide(summarized_fits(), input[["sep_exp"]])
+    HTML(decide(summarized_fits(), input[["sep_exp"]]))
   })
   
   output[["fit_plot_db"]] <- downloadHandler("fit_CI.svg",

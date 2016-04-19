@@ -40,9 +40,9 @@ decide <- function(summary_fit, separate) {
   if (separate) {
     paste0(vapply(levels(summary_fit[["count"]]), function(single_count) {
       dat <- summary_fit[summary_fit[["count"]] == single_count, ]
-      paste0("Count name:", single_count, "\n\n", 
+      paste0("Count name:", single_count, "<br/>", 
              decide_single(dat[["BIC"]], dat[["model"]]))
-    }, "a"), collapse = "\n\n")
+    }, "a"), collapse = "<br/><br/>")
   } else {
     decide_single(unique(summary_fit[["BIC"]]), unique(summary_fit[["model"]]))
   }
@@ -50,10 +50,10 @@ decide <- function(summary_fit, separate) {
 
 decide_single <- function(BICs, model_names) {
   res <- paste0("The most appropriate model (model with the lowest BIC value): ", 
-                as.character(model_names[which.min(BICs)]), ".\n\n")
+                as.character(model_names[which.min(BICs)]), ".<br/>")
   if(length(BICs) > 1)
     res <- paste0(res, "The strength of an evidence that the model with the lowest BIC value 
-                  is the most appropriate: ", assess_difference(BICs), ".\n\n")
+                  is the most appropriate: ", assess_difference(BICs), ".<br/>")
   res
 }
 

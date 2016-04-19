@@ -33,6 +33,7 @@ This panel contains descriptive statistics and summaries of the input data. It c
 
 1. *Mean value estimates*: the estimated value of mean ($\lambda$) and its confidence intervals. The BIC indicates the most appropriate distribution.    
 2. *Coefficients*: coefficients of fitted models. 
+3. *Decision*: the most appropriate model.  
 
 ## Compare distributions
 
