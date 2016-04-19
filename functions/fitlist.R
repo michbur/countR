@@ -19,7 +19,7 @@ summary_fitlist <- function(fitlist) {
 
 plot_fitlist <- function(fitlist) {
   summ <- summary_fitlist(fitlist)
-
+  
   plot_dat <- do.call(rbind, lapply(levels(summ[["count"]]), function(single_count) {
     single_count_dat <- summ[summ[["count"]] == single_count, ]
     data.frame(single_count_dat, 
@@ -37,13 +37,28 @@ plot_fitlist <- function(fitlist) {
 }
 
 decide <- function(summary_fit, separate) {
-  BICs <- summary_fit[["BIC"]]
-  model_names <- summary_fit[["model"]]
   if (separate) {
-    "bla"
+    paste0(vapply(levels(summary_fit[["count"]]), function(single_count) {
+      dat <- summary_fit[summary_fit[["count"]] == single_count, ]
+      paste0("Count name:", single_count, "\n\n", 
+             decide_single(dat[["BIC"]], dat[["model"]]))
+    }, "a"), collapse = "\n\n")
   } else {
-    paste0("The most appropriate model (model with the lowest BIC value): ", 
-         as.character(summary_fit[["model"]][which.min(summary_fit[["BIC"]])]), 
-         ". The difference of")
+    decide_single(unique(summary_fit[["BIC"]]), unique(summary_fit[["model"]]))
   }
+}
+
+decide_single <- function(BICs, model_names) {
+  res <- paste0("The most appropriate model (model with the lowest BIC value): ", 
+                as.character(model_names[which.min(BICs)]), ".\n\n")
+  if(length(BICs) > 1)
+    res <- paste0(res, "The strength of an evidence that the model with the lowest BIC value 
+                  is the most appropriate: ", assess_difference(BICs), ".\n\n")
+  res
+}
+
+assess_difference <- function(BICs) {
+  BIC_difference <- min(BICs[-which.min(BICs)] - min(BICs))
+  id <- as.numeric(cut(BIC_difference, c(0, 3.2, 10, 100, max(BIC_difference))))
+  c("negligible", "substantial", "strong", "decisive")[id]
 }

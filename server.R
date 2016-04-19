@@ -100,12 +100,7 @@ shinyServer(function(input, output) {
   })
   
   output[["model_decision"]] <- renderUI({
-    if(input[["sep_exp"]]) {
-      HTML("blabla")
-    } else {
-      HTML("The most appropriate model (model with the lowest BIC value):", 
-           paste0(as.character(summarized_fits()[["model"]][which.min(summarized_fits()[["BIC"]])]), ".")) 
-    }
+    decide(summarized_fits(), input[["sep_exp"]])
   })
   
   output[["fit_plot_db"]] <- downloadHandler("fit_CI.svg",
