@@ -187,7 +187,7 @@ $(document).ready(function () {
 <table>
 <thead>
 <tr class="header">
-<th align="left">Distribution name</th>
+<th align="left">Distribution <br> name</th>
 <th align="left">pmf</th>
 </tr>
 </thead>
@@ -197,15 +197,15 @@ $(document).ready(function () {
 <td align="left"><span class="math">\[P\{X = k\} = \frac{\lambda^k \exp^{-\lambda}}{k!} \]</span></td>
 </tr>
 <tr class="even">
-<td align="left">ZIP</td>
+<td align="left">Zero-inflated Poisson</td>
 <td align="left"><span class="math">\[P\{X = k\} = \begin{cases} r + ( 1- r) \exp^{-\lambda},\text{if } k = 0\\ r \frac{\lambda^k \exp^{-\lambda}}{k!},\text{if } k = 1, 2, \ldots \end{cases} \]</span></td>
 </tr>
 <tr class="odd">
-<td align="left">NB</td>
+<td align="left">Negative Binomial</td>
 <td align="left"><span class="math">\[P\{X = k\} = \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k\]</span></td>
 </tr>
 <tr class="even">
-<td align="left">ZINB</td>
+<td align="left">Zero-inflated Negative Binomial</td>
 <td align="left"><span class="math">\[P\{X = k\} = \begin{cases}r + (1 - r) \left( \frac{\theta}{\theta + \lambda} \right)^\theta,\text{if } k = 0\\(1 - r) \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k,\text{if } k = 1, 2, \ldots\end{cases}\]</span></td>
 </tr>
 </tbody>
