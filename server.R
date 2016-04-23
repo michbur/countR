@@ -145,13 +145,11 @@ shinyServer(function(input, output) {
   output[["report_download_button"]] <- downloadHandler(
     filename  = "countfitter_report.html",
     content = function(file) {
-      src <- normalizePath(getwd())
-      owd <- setwd(tempdir())
-      on.exit(setwd(owd))
-      file.copy(src, "countfitter", recursive = TRUE)
-      setwd(paste0(getwd(), "/countfitter"))
-      out <- render("countfitter_report.Rmd", output_format = "html_document", file, quiet = TRUE)
-      file.rename(out, file)
+      knitr::knit(input = "countfitter_report.Rmd", 
+                  output = "countfitter_report.md", quiet = TRUE)
+      on.exit(unlink(c("countfitter_report.md", "figure"), recursive = TRUE))
+      markdown::markdownToHTML("countfitter_report.md", file, 
+                               stylesheet = "report.css", options = c('toc', markdown::markdownHTMLOptions(TRUE)))
     })
   
 })
