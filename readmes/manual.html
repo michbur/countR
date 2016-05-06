@@ -150,12 +150,15 @@ $(document).ready(function () {
 </div>
 <div id="count-data" class="section level2">
 <h2>Count data</h2>
-<p>This panel contains descriptive statistics and summaries of the input data. It consists of three subpanels:<br />1. <em>Count table</em>: the input dataset in the tabular format allowing sanity checks and manual modification. 2. <em>Summary</em>: summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).<br />3. <em>Distribution</em>: a bar chart of the counts distribution followed by a pivot table.</p>
+<p>This panel contains descriptive statistics and summaries of the input data. It consists of three subpanels:<br />
+1. <em>Count table</em>: the input dataset in the tabular format allowing sanity checks and manual modification. 2. <em>Summary</em>: summary statistics of the input data (respectively mean, standard deviation, median, median absolute deviate, minimum, maximum, number of elements).<br />
+3. <em>Distribution</em>: a bar chart of the counts distribution followed by a pivot table.</p>
 </div>
 <div id="fitted-models" class="section level2">
 <h2>Fitted models</h2>
 <ol style="list-style-type: decimal">
-<li><em>Mean value estimates</em>: the estimated value of mean (<span class="math">\(\lambda\)</span>) and its confidence intervals. The BIC indicates the most appropriate distribution.<br /></li>
+<li><em>Mean value estimates</em>: the estimated value of mean (<span class="math inline">\(\lambda\)</span>) and its confidence intervals. The BIC indicates the most appropriate distribution.<br />
+</li>
 <li><em>Coefficients</em>: coefficients of fitted models.</li>
 <li><em>Decision</em>: the most appropriate model.</li>
 </ol>
@@ -179,12 +182,18 @@ $(document).ready(function () {
 <h2>Overdispersed count data distributions</h2>
 <p>Parameters:</p>
 <ul>
-<li><span class="math">\(\lambda\)</span> - Poisson parameter (average number of foci per cell).<br /></li>
-<li><span class="math">\(r\)</span> - zero inflation (fraction of cells treated by system as having no foci regardless of their real state).<br /></li>
-<li><span class="math">\(\theta\)</span> - dispersion parameter.</li>
+<li><span class="math inline">\(\lambda\)</span> - Poisson parameter (average number of foci per cell).<br />
+</li>
+<li><span class="math inline">\(r\)</span> - zero inflation (fraction of cells treated by system as having no foci regardless of their real state).<br />
+</li>
+<li><span class="math inline">\(\theta\)</span> - dispersion parameter.</li>
 </ul>
-<p>Usually the NB distribution is parameterized using <span class="math">\(\mu\)</span> and <span class="math">\(\theta\)</span>, but to make comparison clearer, we use <span class="math">\(\lambda\)</span> instead of <span class="math">\(\mu\)</span>. In this parameterization, NB and ZINB are treated as the mixture of Poisson and Gamma (<span class="math">\(\Gamma\)</span>) distributions.</p>
-<table>
+<p>Usually the NB distribution is parameterized using <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\theta\)</span>, but to make comparison clearer, we use <span class="math inline">\(\lambda\)</span> instead of <span class="math inline">\(\mu\)</span>. In this parameterization, NB and ZINB are treated as the mixture of Poisson and Gamma (<span class="math inline">\(\Gamma\)</span>) distributions.</p>
+<table style="width:47%;">
+<colgroup>
+<col width="27%" />
+<col width="19%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Distribution <br> name</th>
@@ -194,73 +203,81 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td align="left">Poisson</td>
-<td align="left"><span class="math">\[P\{X = k\} = \frac{\lambda^k \exp^{-\lambda}}{k!} \]</span></td>
+<td align="left"><span class="math display">\[P\{X = k\} = \frac{\lambda^k \exp^{-\lambda}}{k!} \]</span></td>
 </tr>
 <tr class="even">
 <td align="left">Zero-inflated Poisson</td>
-<td align="left"><span class="math">\[P\{X = k\} = \begin{cases} r + ( 1- r) \exp^{-\lambda},\text{if } k = 0\\ r \frac{\lambda^k \exp^{-\lambda}}{k!},\text{if } k = 1, 2, \ldots \end{cases} \]</span></td>
+<td align="left"><span class="math display">\[P\{X = k\} = \begin{cases} r + ( 1- r) \exp^{-\lambda},\text{if } k = 0\\ r \frac{\lambda^k \exp^{-\lambda}}{k!},\text{if } k = 1, 2, \ldots \end{cases} \]</span></td>
 </tr>
 <tr class="odd">
 <td align="left">Negative Binomial</td>
-<td align="left"><span class="math">\[P\{X = k\} = \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k\]</span></td>
+<td align="left"><span class="math display">\[P\{X = k\} = \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k\]</span></td>
 </tr>
 <tr class="even">
 <td align="left">Zero-inflated Negative Binomial</td>
-<td align="left"><span class="math">\[P\{X = k\} = \begin{cases}r + (1 - r) \left( \frac{\theta}{\theta + \lambda} \right)^\theta,\text{if } k = 0\\(1 - r) \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k,\text{if } k = 1, 2, \ldots\end{cases}\]</span></td>
+<td align="left"><span class="math display">\[P\{X = k\} = \begin{cases}r + (1 - r) \left( \frac{\theta}{\theta + \lambda} \right)^\theta,\text{if } k = 0\\(1 - r) \frac{\Gamma (\theta + k)}{\Gamma(\theta) k!}  \left(\left( \frac{\theta}{\theta + \lambda} \right)^\theta \left( \frac{\lambda}{\theta + \lambda} \right) \right)^k,\text{if } k = 1, 2, \ldots\end{cases}\]</span></td>
 </tr>
 </tbody>
 </table>
 <p>Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real average number of foci per cell.</p>
-<table>
+<table style="width:47%;">
+<colgroup>
+<col width="27%" />
+<col width="19%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Distribution name</th>
+<th align="left">Distribution <br> name</th>
 <th align="left">Expected value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Poisson</td>
-<td align="left"><span class="math">\[E(X) = \lambda \]</span></td>
+<td align="left"><span class="math display">\[E(X) = \lambda \]</span></td>
 </tr>
 <tr class="even">
 <td align="left">ZIP</td>
-<td align="left"><span class="math">\[E(X) = (1 - r) \lambda \]</span></td>
+<td align="left"><span class="math display">\[E(X) = (1 - r) \lambda \]</span></td>
 </tr>
 <tr class="odd">
 <td align="left">NB</td>
-<td align="left"><span class="math">\[E(X) = \lambda \]</span></td>
+<td align="left"><span class="math display">\[E(X) = \lambda \]</span></td>
 </tr>
 <tr class="even">
 <td align="left">ZINB</td>
-<td align="left"><span class="math">\[E(X) = (1 - r)  \lambda \]</span> <!-- keep it here, because otherwise table parse oddly  --></td>
+<td align="left"><span class="math display">\[E(X) = (1 - r)  \lambda \]</span> <!-- keep it here, because otherwise table parse oddly  --></td>
 </tr>
 </tbody>
 </table>
-<p>Depending on the value of <span class="math">\(r\)</span> the variance of ZIP and ZINB may be smaller or bigger than the variance of Poisson distribution. In case of the NB distribution, the variance is always bigger than for the Poisson distribution, although the difference becomes negligible, when the <span class="math">\(\theta\)</span> is much bigger than <span class="math">\(\lambda^2\)</span>.</p>
-<table>
+<p>Depending on the value of <span class="math inline">\(r\)</span> the variance of ZIP and ZINB may be smaller or bigger than the variance of Poisson distribution. In case of the NB distribution, the variance is always bigger than for the Poisson distribution, although the difference becomes negligible, when the <span class="math inline">\(\theta\)</span> is much bigger than <span class="math inline">\(\lambda^2\)</span>.</p>
+<table style="width:47%;">
+<colgroup>
+<col width="27%" />
+<col width="19%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Distribution name</th>
+<th align="left">Distribution <br> name</th>
 <th align="left">Variance</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Poisson</td>
-<td align="left"><span class="math">\[\textrm{var}(X) = \lambda \]</span></td>
+<td align="left"><span class="math display">\[\textrm{var}(X) = \lambda \]</span></td>
 </tr>
 <tr class="even">
 <td align="left">ZIP</td>
-<td align="left"><span class="math">\[\textrm{var}(X) = \lambda (1 - r)(1 + \lambda r)\]</span></td>
+<td align="left"><span class="math display">\[\textrm{var}(X) = \lambda (1 - r)(1 + \lambda r)\]</span></td>
 </tr>
 <tr class="odd">
 <td align="left">NB</td>
-<td align="left"><span class="math">\[\textrm{var}(X) = \lambda + \frac{\lambda^2}{\theta} \]</span></td>
+<td align="left"><span class="math display">\[\textrm{var}(X) = \lambda + \frac{\lambda^2}{\theta} \]</span></td>
 </tr>
 <tr class="even">
 <td align="left">ZINB</td>
-<td align="left"><span class="math">\[\textrm{var}(X) = (1 - r) \lambda \left( 1 + r\lambda  + \frac{1}{\theta} \right)\]</span></td>
+<td align="left"><span class="math display">\[\textrm{var}(X) = (1 - r) \lambda \left( 1 + r\lambda  + \frac{1}{\theta} \right)\]</span></td>
 </tr>
 </tbody>
 </table>

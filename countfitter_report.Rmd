@@ -32,7 +32,7 @@ Confidence level: `r input[["conf_level"]]`.
 
 Type of analysis: `r ifelse(input[["conf_level"]], "separate experiments", "technical replicates")`.
 
-Models selected: `r paste0(input[["chosen_models"]], collapse = ", ")`.
+Models selected: `r paste0(nice_model_names[input[["chosen_models"]]], collapse = ", ")`.
 
 ```{r}
 if(input[["mean_value_rep"]]) {
@@ -41,8 +41,7 @@ if(input[["mean_value_rep"]]) {
   dat <- summarized_fits()[, c("count", "lambda", "lower", "upper", "BIC", "model")]
   cat("\n",readLines("./readmes/mean_value/2.md"), sep = "    \n")
   print_table(dat)
-  cat("\n", readLines("./readmes/mean_value/3.md"), sep = "    \n")
-  print_table(summarized_fits()[, c("count", "lambda", "theta", "r", "model")])
+  
 }
 ```
 

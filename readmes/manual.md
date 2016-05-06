@@ -72,7 +72,7 @@ Zero-inflated Negative Binomial               |$$P\{X = k\} = \begin{cases}r + (
 
 Poisson and Negative Binomial distributions have the same expected value. In case of ZIP and ZINB, the expected value is smaller than the real average number of foci per cell.
 
-Distribution name  | Expected value
+Distribution <br> name  | Expected value
 -------------------|-------------
 Poisson            |$$E(X) = \lambda $$
 ZIP                |$$E(X) = (1 - r) \lambda $$
@@ -81,7 +81,7 @@ ZINB               |$$E(X) = (1 - r)  \lambda $$  <!-- keep it here, because oth
 
 Depending on the value of $r$ the variance of ZIP and ZINB may be smaller or bigger than the variance of Poisson distribution. In case of the NB distribution, the variance is always bigger than for the Poisson distribution, although the difference becomes negligible, when the $\theta$ is much bigger than $\lambda^2$.
 
-Distribution name  | Variance
+Distribution <br> name  | Variance
 -------------------|-------------
 Poisson            |$$\textrm{var}(X) = \lambda $$
 ZIP                |$$\textrm{var}(X) = \lambda (1 - r)(1 + \lambda r)$$
