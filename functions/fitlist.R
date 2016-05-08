@@ -52,7 +52,7 @@ decide_single <- function(BICs, model_names) {
   res <- paste0("The most appropriate model (model with the lowest BIC value): ", 
                 as.character(model_names[which.min(BICs)]), ".<br/>")
   if(length(BICs) > 1)
-    res <- paste0(res, "The strength of an evidence that the model with the lowest BIC value 
+    res <- paste0(res, "The evidence that the model with the lowest BIC value 
                   is the most appropriate: ", assess_difference(BICs), ".<br/>")
   res
 }

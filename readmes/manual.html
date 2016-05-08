@@ -160,7 +160,7 @@ $(document).ready(function () {
 <li><em>Mean value estimates</em>: the estimated value of mean (<span class="math inline">\(\lambda\)</span>) and its confidence intervals. The BIC indicates the most appropriate distribution.<br />
 </li>
 <li><em>Coefficients</em>: coefficients of fitted models.</li>
-<li><em>Decision</em>: the most appropriate model.</li>
+<li><em>Decision</em>: the most appropriate model and the strength of the evidence (Kass and Raftery, 1995).</li>
 </ol>
 </div>
 <div id="compare-distributions" class="section level2">
@@ -177,7 +177,7 @@ $(document).ready(function () {
 <div id="overdispersion" class="section level1">
 <h1>Overdispersion</h1>
 <p>One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data is commonly assumed to be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in <strong>countfitter</strong>: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts.</p>
-<p>Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.</p>
+<p>Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution. If both faulty zeros and increased variance affect the data, the ZINB distribution is the most appropriate.</p>
 <div id="overdispersed-count-data-distributions" class="section level2">
 <h2>Overdispersed count data distributions</h2>
 <p>Parameters:</p>

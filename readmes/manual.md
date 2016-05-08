@@ -33,7 +33,7 @@ This panel contains descriptive statistics and summaries of the input data. It c
 
 1. *Mean value estimates*: the estimated value of mean ($\lambda$) and its confidence intervals. The BIC indicates the most appropriate distribution.    
 2. *Coefficients*: coefficients of fitted models. 
-3. *Decision*: the most appropriate model.  
+3. *Decision*: the most appropriate model and the strength of the evidence (Kass and Raftery, 1995).
 
 ## Compare distributions
 
@@ -51,7 +51,7 @@ The bar charts represent theoretical counts depending on the chosen distribution
 
 One of the important features of the Poisson distribution is the equality of variance and expected value. Although count data is commonly assumed to be Poisson-distributed, we often encounter overdispersed datasets, when the variance is bigger than the mean. Three distributions included in **countfitter**: Zero-Inflated Poisson (ZIP), Negative Binomial (NB) and Zero-negative Binomial (ZINB) model overdispersed counts. 
 
-Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution.
+Overdispersion may be caused by the increased variability of counts, for example when a counting algorithm under- and overcounts. In such situation the data might have the NB distribution. The other cause of overdispersion is called zero-inflation and occurs in datasets, where some factor introduced faulty zeros. That means that some counts, regardless of their real state, are treated as zeros. In this case, data has the ZIP distribution. If both faulty zeros and increased variance affect the data, the ZINB distribution is the most appropriate.  
 
 ## Overdispersed count data distributions
 
