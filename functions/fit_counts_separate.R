@@ -9,7 +9,7 @@ fit_pois_separate <- function(x, level, ...) {
   #AER::dispersiontest(all_fits[[8]][["fit"]], alternative = "greater")[["p.value"]]
   
   #qcc::qcc.overdispersion.test(repeat_list[[8]])[, "p-value"]
-  
+
   list(fit = fit,
        coefficients = c(lambda = exp(unname(summ[["coefficients"]][, "Estimate"]))),
        confint = confint
@@ -23,7 +23,6 @@ fit_nb_separate <- function(x, level, ...) {
   confint_raw <- suppressMessages(confint(fit, level =  level))
   confint <- matrix(exp(confint_raw), ncol = 2, dimnames = list("lambda", c("lower", "upper")))
   
-  
   list(fit = fit,
        coefficients = c(lambda = unname(exp(summ[["coefficients"]][1])),
                         theta = unname(summ[["theta"]])),
@@ -31,6 +30,7 @@ fit_nb_separate <- function(x, level, ...) {
   )
 }
 
+# pscl package
 fit_zip_separate <- function(x, level, ...) {
   fit <- zeroinfl2(x ~ 1, dist = "poisson", ...)
   summ <- summary(fit)
@@ -68,7 +68,7 @@ transform_zi_confint <- function(confint_data) {
 }
 
 fit_counts_separate <- function(counts_list, model, level, ...) {
-  
+    
   lapply(counts_list, function(x) {
     fitted_model <- tryCatch(switch(model,
                                     pois = fit_pois_separate(x, level = level, ...),

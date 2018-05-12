@@ -15,7 +15,7 @@ fit_counts <- function(counts_list, separate = TRUE, model, level = 0.95, ...) {
   
   if(length(checked_model) == 1 && checked_model == "all")
     checked_model <- c("pois", "zip", "nb", "zinb")
-  
+
   if(separate) {
     fit_data <- counts_list
     fit_function <- fit_counts_separate
